@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="GitPlus/GitPlus.csproj">
+    <Deploy />
+  </Project>
+</Solution>
