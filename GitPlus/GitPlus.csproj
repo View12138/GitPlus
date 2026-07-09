@@ -1,19 +1,65 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
-    <Nullable>enable</Nullable>
-    <LangVersion>14</LangVersion>
+	<PropertyGroup>
+		<TargetFramework>net472</TargetFramework>
+		<Nullable>enable</Nullable>
+		<LangVersion>14</LangVersion>
+		<RootNamespace>GitPlus</RootNamespace>
+		<AssemblyName>GitPlus</AssemblyName>
+		<UseWPF>true</UseWPF>
 
-    <!-- VSIX settings -->
-    <VSSDKBuildToolsAutoSetup>true</VSSDKBuildToolsAutoSetup>
-    <GeneratePkgDefFile>true</GeneratePkgDefFile>
-  </PropertyGroup>
-  <ItemGroup>
-    <ProjectCapability Include="CreateVsixContainer" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.14.40265" ExcludeAssets="runtime" />
-    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="18.5.40034" />
-  </ItemGroup>
+		<!-- VSIX settings -->
+		<VSSDKBuildToolsAutoSetup>true</VSSDKBuildToolsAutoSetup>
+		<GeneratePkgDefFile>true</GeneratePkgDefFile>
+
+		<!-- Suppress VSTHRD/VSSDK analyzer false positives on intentional fire-and-forget and synchronous-inside-Task.Run patterns -->
+		<NoWarn>$(NoWarn);VSTHRD010;VSTHRD200;VSSDK007;VSTHRD002;VSTHRD001;VSTHRD103;CS8618</NoWarn>
+		<CopyBuildOutputToOutputDirectory>true</CopyBuildOutputToOutputDirectory>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectCapability Include="CreateVsixContainer" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="Resources\Logo.png" IncludeInVSIX="true" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Update="Properties\Languages.resx">
+		  <Generator>ResXFileCodeGenerator</Generator>
+		  <LastGenOutput>Languages.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\Strings.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>Strings.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\Strings.zh-Hans.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>Strings.zh-Hans.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="System.Drawing.Design" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.0.31902.203" ExcludeAssets="runtime" />
+		<PackageReference Include="Microsoft.VSSDK.BuildTools" Version="18.5.40034" ExcludeAssets="runtime" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.*" />
+		<PackageReference Include="Lombok.NET" Version="2.4.1" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.*" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.*" />
+		<!-- Unify System.Collections.Immutable to 6.0.0 (VS SDK assemblies reference 6.0; DI 8.* pulls 5.0) -->
+		<PackageReference Include="System.Collections.Immutable" Version="6.0.0" ExcludeAssets="runtime" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Properties\Languages.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Languages.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
 </Project>

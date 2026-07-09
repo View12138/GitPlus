@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="GitPlus/Resources/Logo.png" alt="GitPlus Logo" width="128" />
+  <img src="https://github.com/View12138/GitPlus/raw/main/GitPlus/Resources/Logo.png" alt="GitPlus Logo" width="128" />
 </p>
 
 <h1 align="center">Git +</h1>
@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <a href="README.zh.md">中文文档</a>
+  <a href="https://github.com/View12138/GitPlus/blob/main/README.zh.md">中文文档</a>
 </p>
 
 ---
@@ -55,7 +55,7 @@ The extension UI is localized in English and Simplified Chinese (zh-Hans).
 ## 📸 Screenshot
 
 <p align="center">
-  <img src="GitPlus/Resources/Screenshots1.png" height="200px" alt="GitPlus Pull with Stash button in the Git Changes toolbar" />
+  <img src="https://github.com/View12138/GitPlus/raw/main/GitPlus/Resources/Screenshots1.png" height="200px" alt="GitPlus Pull with Stash button in the Git Changes toolbar" />
 </p>
 
 *The injected **Pull with Stash** button (highlighted) in the Git Changes window toolbar, alongside the native Fetch, Pull, and Push buttons.*
@@ -149,7 +149,7 @@ The `GitPlus.Tests` project uses **xunit** + **Moq**, targeting `net472` with WP
 
 ## 📄 License
 
-This project is licensed under the MIT License — see [LICENSE.txt](LICENSE.txt) for details.
+This project is licensed under the MIT License — see [LICENSE.txt](https://github.com/View12138/GitPlus/blob/main/LICENSE.txt) for details.
 
 ---
 

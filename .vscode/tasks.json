@@ -1,0 +1,14 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build GitPlus",
+			"type": "shell",
+			"command": "dotnet build d:\\repos\\repo-view\\GitPlus\\GitPlus.slnx",
+			"isBackground": false,
+			"problemMatcher": [
+				"$msCompile"
+			]
+		}
+	]
+}
