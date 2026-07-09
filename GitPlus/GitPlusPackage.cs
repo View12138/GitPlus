@@ -1,53 +1,111 @@
-﻿using Microsoft.VisualStudio.Shell;
-using System;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using EnvDTE;
+using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.Threading;
 
-namespace GitPlus
+namespace GitPlus;
+
+[PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
+[Guid(PackageGuidString)]
+[ProvideOptionPage(typeof(GitPlusOptionPage), "Git +", "General", 0, 0, true)]
+[ProvideAutoLoad(VSConstants.UICONTEXT.SolutionExists_string, PackageAutoLoadFlags.BackgroundLoad)]
+public sealed class GitPlusPackage : AsyncPackage
 {
-    /// <summary>
-    /// This is the class that implements the package exposed by this assembly.
-    /// </summary>
-    /// <remarks>
-    /// <para>
-    /// The minimum requirement for a class to be considered a valid package for Visual Studio
-    /// is to implement the IVsPackage interface and register itself with the shell.
-    /// This package uses the helper classes defined inside the Managed Package Framework (MPF)
-    /// to do it: it derives from the Package class that provides the implementation of the
-    /// IVsPackage interface and uses the registration attributes defined in the framework to
-    /// register itself and its components with the shell. These attributes tell the pkgdef creation
-    /// utility what data to put into .pkgdef file.
-    /// </para>
-    /// <para>
-    /// To get loaded into VS, the package must be referred by &lt;Asset Type="Microsoft.VisualStudio.VsPackage" ...&gt; in .vsixmanifest file.
-    /// </para>
-    /// </remarks>
-    [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [Guid(GitPlusPackage.PackageGuidString)]
-    public sealed class GitPlusPackage : AsyncPackage
+    public const string PackageGuidString = "3501f9fc-3ea2-4112-ae05-c14ab051dc79";
+
+    protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
     {
-        /// <summary>
-        /// GitPlusPackage GUID string.
-        /// </summary>
-        public const string PackageGuidString = "3501f9fc-3ea2-4112-ae05-c14ab051dc79";
-
-        #region Package Members
-
-        /// <summary>
-        /// Initialization of the package; this method is called right after the package is sited, so this is the place
-        /// where you can put all the initialization code that rely on services provided by VisualStudio.
-        /// </summary>
-        /// <param name="cancellationToken">A cancellation token to monitor for initialization cancellation, which can occur when VS is shutting down.</param>
-        /// <param name="progress">A provider for progress updates.</param>
-        /// <returns>A task representing the async work of package initialization, or an already completed task if there is none. Do not return null from this method.</returns>
-        protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
+        var stopwatch = Stopwatch.StartNew();
+        var logger = new OutputWindowLogger("Git +");
+        logger.LogTrace("[GitPlusPackage] enter '{method}'", nameof(InitializeAsync));
+        try
         {
-            // When initialized asynchronously, the current thread may be a background thread at this point.
-            // Do any initialization that requires the UI thread after switching to the UI thread.
-            await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
-        }
+            var services = new ServiceCollection()
+                .AddSingleton<ILogger>(logger)
+                .AddSingleton<WindowWatcher>()
+                .AddSingleton<GitCommandService>()
+                .AddSingleton<AutoFetchService>()
+                .AddTransient(p => (GetDialogPage(typeof(GitPlusOptionPage)) as GitPlusOptionPage)?.ToOption()!)
+                .AddTransient(p => (GetGlobalService(typeof(DTE)) as DTE)!)
+                .AddTransient(p => (GetGlobalService(typeof(SVsOutputWindow)) as IVsOutputWindow)!)
+                ;
 
-        #endregion
+            foreach (var injectorType in typeof(GitPlusPackage).Assembly.GetTypes().Where(t => !t.IsAbstract && t.IsSubclassOf(typeof(InjectorBase))))
+            {
+                services.AddSingleton(injectorType);
+                logger.LogDebug("[GitPlusPackage] injector registered: {Type}", injectorType.Name);
+            }
+            Extensions.BuildServiceProvider(services);
+            logger.LogDebug("[GitPlusPackage] DI container built with {ServiceCount} services.", services.Count);
+
+            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/GitPlus;component/Resources/GitButtonStyle.xaml", UriKind.Absolute) });
+            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/GitPlus;component/Resources/Icons.xaml", UriKind.Absolute) });
+            logger.LogDebug("[GitPlusPackage] XAML resource dictionaries merged.");
+
+            var watcher = Extensions.GetRequiredService<WindowWatcher>();
+            var autoFetch = Extensions.GetRequiredService<AutoFetchService>();
+            watcher.WindowCreated += (s, e) => ScheduleProcess(e.Caption);
+            watcher.WindowActivated += (s, e) => ScheduleProcess(e.Caption);
+            await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+            await watcher.StartAsync(cancellationToken);
+            await autoFetch.StartAsync();
+            logger.LogDebug("[GitPlusPackage] GitPlus initialization complete.");
+        }
+        catch (OperationCanceledException ex) { logger.LogWarning(ex, "Initialization canceled."); }
+        catch (Exception ex) { logger.LogCritical(ex, "Initialization failed."); }
+        finally
+        {
+            stopwatch.Stop();
+            logger.LogTrace("[GitPlusPackage] exit '{method}', elapsed={elapsed}ms", nameof(InitializeAsync), stopwatch.ElapsedMilliseconds);
+        }
+    }
+
+#pragma warning disable VSTHRD100
+    private async void ScheduleProcess(string caption)
+#pragma warning restore VSTHRD100
+    {
+        var stopwatch = Stopwatch.StartNew();
+        var logger = Extensions.GetRequiredService<ILogger>();
+        logger.LogTrace("[GitPlusPackage] enter '{method}', caption=\"{Caption}\"", nameof(ScheduleProcess), caption);
+        await Task.Delay(200);
+        foreach (var injectorType in typeof(GitPlusPackage).Assembly.GetTypes().Where(t => !t.IsAbstract && t.IsSubclassOf(typeof(InjectorBase))))
+        {
+            if (Extensions.GetService(injectorType) is not InjectorBase injector) continue;
+            if (!injector.CanInject(caption))
+            {
+                logger.LogDebug("[GitPlusPackage] injector {Type} skipped for \"{Caption}\"", injectorType.Name, caption);
+                continue;
+            }
+            logger.LogDebug("[GitPlusPackage] injector {Type} processing \"{Caption}\"...", injectorType.Name, caption);
+            try
+            {
+                await injector.InjectAsync(caption);
+                logger.LogDebug("[GitPlusPackage] injector {Type} completed for \"{Caption}\".", injectorType.Name, caption);
+            }
+            catch (OperationCanceledException ex) { logger.LogWarning(ex, "Injection canceled for {Type}.", injectorType.Name); }
+            catch (Exception ex) { logger.LogError(ex, "Injection failed for {Type}.", injectorType.Name); }
+        }
+        stopwatch.Stop();
+        logger.LogTrace("[GitPlusPackage] exit '{method}', elapsed={elapsed}ms", nameof(ScheduleProcess), stopwatch.ElapsedMilliseconds);
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            try
+            {
+                var watcher = Extensions.GetService<WindowWatcher>();
+                watcher?.Dispose();
+                Extensions.GetService<ILogger>()?.LogInformation("GitPlus disposed.");
+            }
+            catch (Exception ex)
+            {
+                Extensions.GetService<ILogger>()?.LogError(ex, "Dispose failed.");
+            }
+        }
+        base.Dispose(disposing);
     }
 }

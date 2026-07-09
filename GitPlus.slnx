@@ -1,4 +1,8 @@
 <Solution>
+  <Folder Name="/Configurations/">
+    <File Path="nuget.config" />
+  </Folder>
+  <Project Path="GitPlus.Tests/GitPlus.Tests.csproj" />
   <Project Path="GitPlus/GitPlus.csproj">
     <Deploy />
   </Project>
