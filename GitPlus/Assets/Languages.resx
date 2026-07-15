@@ -135,16 +135,16 @@
   <data name="Option_TimeoutSeconds_Description" xml:space="preserve">
     <value>Timeout for Git operations in seconds. Minimum: 1.</value>
   </data>
-  <data name="Option_GitFilePath_DisplayName" xml:space="preserve">
+  <data name="Option_GitFileName_DisplayName" xml:space="preserve">
     <value>Git File Path</value>
   </data>
-  <data name="Option_GitFilePath_Description" xml:space="preserve">
+  <data name="Option_GitFileName_Description" xml:space="preserve">
     <value>Path to git.exe. Leave empty to use the system PATH.</value>
   </data>
-  <data name="Option_AutoFetchEnabled_DisplayName" xml:space="preserve">
+  <data name="Option_UseAutoFetch_DisplayName" xml:space="preserve">
     <value>Enable Auto Fetch</value>
   </data>
-  <data name="Option_AutoFetchEnabled_Description" xml:space="preserve">
+  <data name="Option_UseAutoFetch_Description" xml:space="preserve">
     <value>When enabled, periodically runs git fetch --all --prune in the background.</value>
   </data>
   <data name="Option_AutoFetchIntervalMinutes_DisplayName" xml:space="preserve">
@@ -194,5 +194,47 @@
   </data>
   <data name="AutoFetchToolTipSuffix" xml:space="preserve">
     <value> (Auto Fetch)</value>
+  </data>
+  <data name="OptionCategory_Commit" xml:space="preserve">
+    <value>Commit</value>
+  </data>
+  <data name="Option_AutoPullVisible_DisplayName" xml:space="preserve">
+    <value>Show Auto Pull Button</value>
+  </data>
+  <data name="Option_AutoPullVisible_Description" xml:space="preserve">
+    <value>Determines whether to show the auto pull button in the toolbar.</value>
+  </data>
+  <data name="Option_ConventionalCommitsVisible_DisplayName" xml:space="preserve">
+    <value>Show Conventional Commits Button</value>
+  </data>
+  <data name="Option_ConventionalCommitsVisible_Description" xml:space="preserve">
+    <value>Determines whether to show the conventional commits button in the toolbar.</value>
+  </data>
+  <data name="Option_UseConventionalCommitScope_DisplayName" xml:space="preserve">
+    <value>Use Scope</value>
+  </data>
+  <data name="Option_UseConventionalCommitScope_Description" xml:space="preserve">
+    <value>Determines whether to use scope in commit messages.</value>
+  </data>
+  <data name="Option_ConventionalCommitScopeFileName_DisplayName" xml:space="preserve">
+    <value>Conventional Commit Scope File Name</value>
+  </data>
+  <data name="Option_ConventionalCommitScopeFileName_Description" xml:space="preserve">
+    <value>Determines the file name for conventional commit message scopes. (Use the menu item 'Generate Scope Template' to generate the template file)</value>
+  </data>
+  <data name="InsertConventionalCommitToolTip" xml:space="preserve">
+    <value>Insert Conventional Commit Template</value>
+  </data>
+  <data name="ScopesFileExistsTitle" xml:space="preserve">
+    <value>Scopes File Exists</value>
+  </data>
+  <data name="ScopesFileExistsMessage" xml:space="preserve">
+    <value>Scopes file already exists. Please delete it first if you want to regenerate.</value>
+  </data>
+  <data name="FileBrowser_SelectGitTitle" xml:space="preserve">
+    <value>Select git.exe</value>
+  </data>
+  <data name="FileBrowser_ExecutableFilter" xml:space="preserve">
+    <value>Executable files (*.exe)|*.exe|All files (*.*)|*.*</value>
   </data>
 </root>

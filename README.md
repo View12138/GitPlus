@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="GitPlus/Resources/Logo.png" alt="GitPlus Logo" width="128" />
+  <img src="https://github.com/View12138/GitPlus/raw/main/GitPlus/Assets/Logo.png" alt="GitPlus Logo" width="128" />
 </p>
 
 <h1 align="center">Git +</h1>
@@ -7,11 +7,11 @@
 <p align="center">
   <strong>Visual Studio Git Enhancement Extension</strong>
   <br />
-  Toolbar buttons, auto-fetch, and smart sync on top of VS built-in Git tools.
+  Toolbar buttons, auto-fetch, smart sync and conventional commits on top of VS built-in Git tools.
 </p>
 
 <p align="center">
-  <a href="README.zh.md">中文文档</a>
+  <a href="https://github.com/View12138/GitPlus/blob/main/README.zh.md">中文文档</a>
 </p>
 
 ---
@@ -33,6 +33,16 @@ No more "Cannot pull with uncommitted changes" errors — perfect for quickly sy
 
 Periodically runs `git fetch --all --prune` in the background at a configurable interval. Stay up-to-date with remote changes without lifting a finger. The auto-fetch interval badge is displayed on the Fetch button tooltip.
 
+### 📝 Conventional Commits
+
+Insert conventional commit templates directly into the Git commit message box. A **Insert Conventional Commit** button is injected into the Git Changes window, right next to the work item link button. Supports:
+
+- Select from predefined commit types (`feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`, `ci`, `build`, `revert`), each with emoji and description
+- Optional **scope** support — reads from a customizable scope JSON file in the solution root
+- **BREAKING CHANGE** footer insertion
+- Type replacement — selecting a different type replaces the existing one in the message
+- Generates scope template file via the `GENERATE SCOPESFILE` menu item
+
 ### ⚙️ Configurable Options
 
 All options are accessible via **Tools → Options → Git +**:
@@ -44,6 +54,10 @@ All options are accessible via **Tools → Options → Git +**:
 | Auto Fetch | Enable Auto Fetch | ✅ On | Toggle background auto-fetch |
 | Auto Fetch | Fetch Interval (minutes) | 5 | Minutes between auto-fetch calls |
 | Pull | Use Rebase on Pull | ✅ On | Use `--rebase` instead of merge |
+| Pull | Show Auto Pull Button | ✅ On | Show/hide the auto pull button |
+| Commit | Show Conventional Commits Button | ✅ On | Show/hide the conventional commits button |
+| Commit | Use Scope | ✅ On | Include scope in commit messages |
+| Commit | Conventional Commit Scope File Name | ConventionalCommitScopes.json | File name for commit message scopes |
 | Logging | Log Level | Information | Output verbosity in the Git + pane |
 
 ### 🌐 Localization
@@ -52,13 +66,14 @@ The extension UI is localized in English and Simplified Chinese (zh-Hans).
 
 ---
 
-## 📸 Screenshot
+## 📸 Screenshots
 
 <p align="center">
-  <img src="GitPlus/Resources/Screenshots1.png" height="200px" alt="GitPlus Pull with Stash button in the Git Changes toolbar" />
+  <img width="340px" src="https://github.com/View12138/GitPlus/raw/main/GitPlus/Assets/Screenshots1.png" alt="GitPlus Pull with Stash" style="vertical-align: top;" />
+  <img width="340px" src="https://github.com/View12138/GitPlus/raw/main/GitPlus/Assets/Screenshots2.png" alt="GitPlus Conventional Commits" style="vertical-align: top;" />
 </p>
 
-*The injected **Pull with Stash** button (highlighted) in the Git Changes window toolbar, alongside the native Fetch, Pull, and Push buttons.*
+*The injected **Pull with Stash** button and **Conventional Commits** button in the Git Changes window.*
 
 ---
 
@@ -66,7 +81,7 @@ The extension UI is localized in English and Simplified Chinese (zh-Hans).
 
 ### Prerequisites
 
-- **Visual Studio 2022** (version 17.14 or later)
+- **Visual Studio 2022** (version 17.0 or later)
 - **.NET Framework 4.7.2** or later
 
 ### From VSIX
@@ -106,16 +121,22 @@ GitPlus/
 │   └── GitPlusOptionPage.cs       # Tools → Options dialog page
 ├── Injectors/
 │   ├── InjectorBase.cs            # Abstract base for UI injectors
-│   └── GitWindowActionButtonPanelInjector.cs
+│   ├── GitWindowActionButtonPanelInjector.cs
+│   └── GitWorkItemActionStackPanelInjector.cs
 ├── Services/
 │   ├── WindowWatcher.cs           # DTE window lifecycle events
 │   ├── GitCommandService.cs       # git.exe process wrapper
 │   └── AutoFetchService.cs        # Periodic auto-fetch timer
 ├── Commons/
 │   ├── Extensions.cs              # DI / WPF VisualTree helpers
+│   ├── FileBrowserEditor.cs       # File browser UITypeEditor
 │   ├── GitResult.cs               # Git operation result model
 │   ├── GitWindowLocator.cs        # VisualTree element locator
-│   └── GitWindowViewModelExtensions.cs
+│   ├── GitWindowViewModelExtensions.cs
+│   └── LocalizedAttributes.cs     # Localized attribute classes
+├── Assets/
+│   ├── conventional-commits-rules.json
+│   └── conventional-commits-rules.zh-Hans.json
 └── Resources/
     ├── GitButtonStyle.xaml        # ImageButton control template
     └── Icons.xaml                 # DrawingImage vector icons
@@ -149,7 +170,7 @@ The `GitPlus.Tests` project uses **xunit** + **Moq**, targeting `net472` with WP
 
 ## 📄 License
 
-This project is licensed under the MIT License — see [LICENSE.txt](LICENSE.txt) for details.
+This project is licensed under the MIT License — see [LICENSE.txt](https://github.com/View12138/GitPlus/blob/main/LICENSE.txt) for details.
 
 ---
 

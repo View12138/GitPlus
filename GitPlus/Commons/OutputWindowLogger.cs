@@ -20,7 +20,7 @@ public sealed class OutputWindowLogger(string categoryName = "Git +") : ILogger
         try
         {
             var option = Extensions.GetService<GitPlusOption>();
-            return logLevel != LogLevel.None && logLevel >= (option?.LogLevel ?? LogLevel.Information);
+            return logLevel != LogLevel.None && logLevel >= (option?.Logging.LogLevel ?? LogLevel.Information);
         }
         catch
         {

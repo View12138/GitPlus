@@ -135,16 +135,16 @@
   <data name="Option_TimeoutSeconds_Description" xml:space="preserve">
     <value>Git 操作超时时间，单位为秒。最小值：1。</value>
   </data>
-  <data name="Option_GitFilePath_DisplayName" xml:space="preserve">
+  <data name="Option_GitFileName_DisplayName" xml:space="preserve">
     <value>Git 文件路径</value>
   </data>
-  <data name="Option_GitFilePath_Description" xml:space="preserve">
+  <data name="Option_GitFileName_Description" xml:space="preserve">
     <value>git.exe 的路径。留空则使用系统 PATH。</value>
   </data>
-  <data name="Option_AutoFetchEnabled_DisplayName" xml:space="preserve">
+  <data name="Option_UseAutoFetch_DisplayName" xml:space="preserve">
     <value>启用自动提取</value>
   </data>
-  <data name="Option_AutoFetchEnabled_Description" xml:space="preserve">
+  <data name="Option_UseAutoFetch_Description" xml:space="preserve">
     <value>启用后，将在后台定期运行 git fetch --all --prune。</value>
   </data>
   <data name="Option_AutoFetchIntervalMinutes_DisplayName" xml:space="preserve">
@@ -194,5 +194,47 @@
   </data>
   <data name="AutoFetchToolTipSuffix" xml:space="preserve">
     <value> (自动提取)</value>
+  </data>
+  <data name="OptionCategory_Commit" xml:space="preserve">
+    <value>提交</value>
+  </data>
+  <data name="Option_AutoPullVisible_DisplayName" xml:space="preserve">
+    <value>显示自动拉取按钮</value>
+  </data>
+  <data name="Option_AutoPullVisible_Description" xml:space="preserve">
+    <value>确定是否在工具栏中显示自动拉取按钮。</value>
+  </data>
+  <data name="Option_ConventionalCommitsVisible_DisplayName" xml:space="preserve">
+    <value>显示约定式提交按钮</value>
+  </data>
+  <data name="Option_ConventionalCommitsVisible_Description" xml:space="preserve">
+    <value>确定是否在工具栏中显示约定式提交按钮。</value>
+  </data>
+  <data name="Option_UseConventionalCommitScope_DisplayName" xml:space="preserve">
+    <value>使用范围</value>
+  </data>
+  <data name="Option_UseConventionalCommitScope_Description" xml:space="preserve">
+    <value>确定是否在提交消息中使用范围。</value>
+  </data>
+  <data name="Option_ConventionalCommitScopeFileName_DisplayName" xml:space="preserve">
+    <value>约定式提交范围文件名</value>
+  </data>
+  <data name="Option_ConventionalCommitScopeFileName_Description" xml:space="preserve">
+    <value>确定用于约定式提交消息范围的文件名。（使用菜单项"生成范围模板文件"生成模板文件）</value>
+  </data>
+  <data name="InsertConventionalCommitToolTip" xml:space="preserve">
+    <value>插入约定式提交模板</value>
+  </data>
+  <data name="ScopesFileExistsTitle" xml:space="preserve">
+    <value>范围文件已存在</value>
+  </data>
+  <data name="ScopesFileExistsMessage" xml:space="preserve">
+    <value>范围文件已存在。如需重新生成，请先删除现有文件。</value>
+  </data>
+  <data name="FileBrowser_SelectGitTitle" xml:space="preserve">
+    <value>选择 git.exe</value>
+  </data>
+  <data name="FileBrowser_ExecutableFilter" xml:space="preserve">
+    <value>可执行文件 (*.exe)|*.exe|所有文件 (*.*)|*.*</value>
   </data>
 </root>

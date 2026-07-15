@@ -4,6 +4,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:shell="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.15.0">
+
+    <!--#region PullWithStashIcon-->
     <DrawingImage x:Key="PullWithStashIconNormal">
         <DrawingImage.Drawing>
             <GeometryDrawing Brush="{DynamicResource {x:Static shell:EnvironmentColors.CommandBarTextActiveBrushKey}}" Geometry="F1 M 3.75 20 L 3.75 18.75 L 15 18.75 L 15 20 Z M 15.439453 10.439453 L 9.375 16.552734 L 3.310547 10.439453 L 4.189453 9.560547 L 8.75 14.150391 L 8.75 0 L 10 0 L 10 14.150391 L 14.560547 9.560547 Z " />
@@ -19,4 +21,24 @@
             <GeometryDrawing Brush="{DynamicResource {x:Static shell:EnvironmentColors.CommandBarTextSelectedBrushKey}}" Geometry="F1 M 3.75 20 L 3.75 18.75 L 15 18.75 L 15 20 Z M 15.439453 10.439453 L 9.375 16.552734 L 3.310547 10.439453 L 4.189453 9.560547 L 8.75 14.150391 L 8.75 0 L 10 0 L 10 14.150391 L 14.560547 9.560547 Z " />
         </DrawingImage.Drawing>
     </DrawingImage>
+    <!--#endregion-->
+
+    <!--#region CommentIcon-->
+    <DrawingImage x:Key="CommentIconNormal">
+        <DrawingImage.Drawing>
+            <GeometryDrawing Brush="{DynamicResource {x:Static shell:EnvironmentColors.CommandBarTextActiveBrushKey}}" Geometry="F1 M 20 1.25 L 20 15 L 7.138672 15 L 2.5 19.638672 L 2.5 15 L 0 15 L 0 1.25 Z M 18.75 2.5 L 1.25 2.5 L 1.25 13.75 L 3.75 13.75 L 3.75 16.611328 L 6.611328 13.75 L 18.75 13.75 Z M 12.5 8.75 L 11.25 8.75 L 11.25 6.25 L 13.75 6.25 L 13.75 8.75 C 13.75 8.925781 13.717447 9.088542 13.652344 9.238281 C 13.587239 9.388021 13.497721 9.519857 13.383789 9.633789 C 13.269855 9.747722 13.13802 9.83724 12.988281 9.902344 C 12.838541 9.967448 12.675781 10 12.5 10 Z M 7.5 8.75 L 6.25 8.75 L 6.25 6.25 L 8.75 6.25 L 8.75 8.75 C 8.75 8.925781 8.717447 9.088542 8.652344 9.238281 C 8.587239 9.388021 8.497721 9.519857 8.383789 9.633789 C 8.269856 9.747722 8.138021 9.83724 7.988281 9.902344 C 7.838541 9.967448 7.675781 10 7.5 10 Z " />
+        </DrawingImage.Drawing>
+    </DrawingImage>
+    <DrawingImage x:Key="CommentIconHover">
+        <DrawingImage.Drawing>
+            <GeometryDrawing Brush="{DynamicResource {x:Static shell:EnvironmentColors.CommandBarTextHoverBrushKey}}" Geometry="F1 M 20 1.25 L 20 15 L 7.138672 15 L 2.5 19.638672 L 2.5 15 L 0 15 L 0 1.25 Z M 18.75 2.5 L 1.25 2.5 L 1.25 13.75 L 3.75 13.75 L 3.75 16.611328 L 6.611328 13.75 L 18.75 13.75 Z M 12.5 8.75 L 11.25 8.75 L 11.25 6.25 L 13.75 6.25 L 13.75 8.75 C 13.75 8.925781 13.717447 9.088542 13.652344 9.238281 C 13.587239 9.388021 13.497721 9.519857 13.383789 9.633789 C 13.269855 9.747722 13.13802 9.83724 12.988281 9.902344 C 12.838541 9.967448 12.675781 10 12.5 10 Z M 7.5 8.75 L 6.25 8.75 L 6.25 6.25 L 8.75 6.25 L 8.75 8.75 C 8.75 8.925781 8.717447 9.088542 8.652344 9.238281 C 8.587239 9.388021 8.497721 9.519857 8.383789 9.633789 C 8.269856 9.747722 8.138021 9.83724 7.988281 9.902344 C 7.838541 9.967448 7.675781 10 7.5 10 Z " />
+        </DrawingImage.Drawing>
+    </DrawingImage>
+    <DrawingImage x:Key="CommentIconPressed">
+        <DrawingImage.Drawing>
+            <GeometryDrawing Brush="{DynamicResource {x:Static shell:EnvironmentColors.CommandBarTextSelectedBrushKey}}" Geometry="F1 M 20 1.25 L 20 15 L 7.138672 15 L 2.5 19.638672 L 2.5 15 L 0 15 L 0 1.25 Z M 18.75 2.5 L 1.25 2.5 L 1.25 13.75 L 3.75 13.75 L 3.75 16.611328 L 6.611328 13.75 L 18.75 13.75 Z M 12.5 8.75 L 11.25 8.75 L 11.25 6.25 L 13.75 6.25 L 13.75 8.75 C 13.75 8.925781 13.717447 9.088542 13.652344 9.238281 C 13.587239 9.388021 13.497721 9.519857 13.383789 9.633789 C 13.269855 9.747722 13.13802 9.83724 12.988281 9.902344 C 12.838541 9.967448 12.675781 10 12.5 10 Z M 7.5 8.75 L 6.25 8.75 L 6.25 6.25 L 8.75 6.25 L 8.75 8.75 C 8.75 8.925781 8.717447 9.088542 8.652344 9.238281 C 8.587239 9.388021 8.497721 9.519857 8.383789 9.633789 C 8.269856 9.747722 8.138021 9.83724 7.988281 9.902344 C 7.838541 9.967448 7.675781 10 7.5 10 Z " />
+        </DrawingImage.Drawing>
+    </DrawingImage>
+    <!--#endregion-->
+
 </ResourceDictionary>

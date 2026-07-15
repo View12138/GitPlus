@@ -9,7 +9,7 @@ internal static class Localization
         string text = name;
         try
         {
-            text = Properties.Languages.ResourceManager.GetString(name, Properties.Languages.Culture);
+            text = Assets.Languages.ResourceManager.GetString(name, Assets.Languages.Culture);
         }
         catch (MissingManifestResourceException ex)
         {

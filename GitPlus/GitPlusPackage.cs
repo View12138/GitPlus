@@ -40,8 +40,8 @@ public sealed class GitPlusPackage : AsyncPackage
             Extensions.BuildServiceProvider(services);
             logger.LogDebug("[GitPlusPackage] DI container built with {ServiceCount} services.", services.Count);
 
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/GitPlus;component/Resources/GitButtonStyle.xaml", UriKind.Absolute) });
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/GitPlus;component/Resources/Icons.xaml", UriKind.Absolute) });
+            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = "GitButtonStyle.xaml".GetResourceUri(ResourceFolders.Resources) });
+            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = "Icons.xaml".GetResourceUri(ResourceFolders.Resources) });
             logger.LogDebug("[GitPlusPackage] XAML resource dictionaries merged.");
 
             var watcher = Extensions.GetRequiredService<WindowWatcher>();

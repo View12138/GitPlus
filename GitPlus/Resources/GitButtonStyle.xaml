@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:shell="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.15.0">
 
-    <Style x:Key="GitButtonStyle" TargetType="{x:Type shell:ImageButton}">
+    <Style x:Key="GitStatusButtonStyle" TargetType="{x:Type shell:ImageButton}">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Template">
@@ -23,7 +23,53 @@
                         <Image
                             x:Name="PART_Image"
                             Width="16"
-                            Height="14"
+                            Height="16"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            RenderOptions.BitmapScalingMode="HighQuality"
+                            Source="{TemplateBinding ImageNormal}"
+                            Stretch="Uniform" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource {x:Static shell:EnvironmentColors.CommandBarHoverBrushKey}}" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource {x:Static shell:EnvironmentColors.CommandBarHoverBrushKey}}" />
+                            <Setter TargetName="PART_Image" Property="Source" Value="{Binding ImageHover, RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource {x:Static shell:EnvironmentColors.CommandBarSelectedBrushKey}}" />
+                            <Setter TargetName="PART_Image" Property="Source" Value="{Binding ImagePressed, RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="PART_Image" Property="Opacity" Value="0.35" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="GitActionButtonStyle" TargetType="{x:Type shell:ImageButton}">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type shell:ImageButton}">
+                    <Border
+                        x:Name="border"
+                        Width="34"
+                        Height="24"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        BorderThickness="1"
+                        CornerRadius="4"
+                        SnapsToDevicePixels="True">
+                        <Image
+                            x:Name="PART_Image"
+                            Width="16"
+                            Height="16"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
                             RenderOptions.BitmapScalingMode="HighQuality"
                             Source="{TemplateBinding ImageNormal}"
                             Stretch="Uniform" />

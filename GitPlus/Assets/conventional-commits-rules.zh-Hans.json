@@ -1,0 +1,83 @@
+{
+  "rules": [
+    {
+      "type": "feat",
+      "emoji": "✨",
+      "title": "新功能",
+      "description": "新增功能（MINOR）"
+    },
+    {
+      "type": "fix",
+      "emoji": "🐛",
+      "title": "问题修复",
+      "description": "修复缺陷（PATCH）"
+    },
+    {
+      "type": "docs",
+      "emoji": "📚",
+      "title": "文档",
+      "description": "仅文档变更"
+    },
+    {
+      "type": "style",
+      "emoji": "💎",
+      "title": "样式",
+      "description": "不影响代码语义的变更（空白、格式、缺失分号等）"
+    },
+    {
+      "type": "refactor",
+      "emoji": "📦",
+      "title": "代码重构",
+      "description": "既不修复缺陷也不新增功能的代码变更"
+    },
+    {
+      "type": "perf",
+      "emoji": "🚀",
+      "title": "性能优化",
+      "description": "提升性能的代码变更"
+    },
+    {
+      "type": "test",
+      "emoji": "🚨",
+      "title": "测试",
+      "description": "补充缺失测试或修正现有测试"
+    },
+    {
+      "type": "build",
+      "emoji": "🛠",
+      "title": "构建",
+      "description": "影响构建系统或外部依赖的变更（示例范围：gulp、broccoli、npm）"
+    },
+    {
+      "type": "ci",
+      "emoji": "⚙️",
+      "title": "持续集成",
+      "description": "CI 配置文件与脚本的变更（示例范围：Travis、Circle、BrowserStack、SauceLabs）"
+    },
+    {
+      "type": "chore",
+      "emoji": "♻️",
+      "title": "杂务",
+      "description": "不修改 src 或 test 文件的其他变更"
+    },
+    {
+      "type": "revert",
+      "emoji": "🗑",
+      "title": "回滚",
+      "description": "回滚之前的提交"
+    },
+    {
+      "type": "BREAKING CHANGE",
+      "emoji": "💥",
+      "title": "破坏性变更",
+      "description": "在提交脚注中包含 BREAKING CHANGE: 或使用 <type>(scope)! 表示引入了破坏性 API 变更。破坏性变更可以是任意 <type> 提交的一部分。（MAJOR）"
+    },
+    {
+      "type": "GENERATE SCOPESFILE",
+      "emoji": "📝",
+      "title": "生成范围模板文件",
+      "description": "使用配置的文件模板路径生成范围模板文件"
+    }
+  ]
+}
+

@@ -20,33 +20,22 @@
 	<ItemGroup>
 		<ProjectCapability Include="CreateVsixContainer" />
 	</ItemGroup>
-	<ItemGroup>
-		<Content Include="Resources\Logo.png" IncludeInVSIX="true" />
-	</ItemGroup>
 
 	<ItemGroup>
-		<EmbeddedResource Update="Properties\Languages.resx">
-		  <Generator>ResXFileCodeGenerator</Generator>
-		  <LastGenOutput>Languages.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-		<EmbeddedResource Update="Resources\Strings.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>Strings.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-		<EmbeddedResource Update="Resources\Strings.zh-Hans.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>Strings.zh-Hans.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-	</ItemGroup>
-
-	<ItemGroup>
-		<Reference Include="System.Drawing.Design" />
+		<Content Include="Assets\Logo.png" IncludeInVSIX="true" />
+		<None Update="Assets\Screenshots*.png" DependentUpon="Logo.png" />
+		<EmbeddedResource Update="Assets\Languages.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Languages.Designer.cs" />
+		<Compile Update="Assets\Languages.Designer.cs" DesignTime="True" AutoGen="True" DependentUpon="Languages.resx" />
+		<EmbeddedResource Update="Assets\Languages.*.resx" DependentUpon="Languages.resx" />
+		<Resource Include="Assets\conventional-commits-rules.json" />
+		<Resource Include="Assets\conventional-commits-rules.*.json" DependentUpon="conventional-commits-rules.json" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.0.31902.203" ExcludeAssets="runtime" />
 		<PackageReference Include="Microsoft.VSSDK.BuildTools" Version="18.5.40034" ExcludeAssets="runtime" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.*" />
+		<!--<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.142" />-->
 		<PackageReference Include="Lombok.NET" Version="2.4.1" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.*" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.*" />
@@ -54,12 +43,10 @@
 		<PackageReference Include="System.Collections.Immutable" Version="6.0.0" ExcludeAssets="runtime" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Compile Update="Properties\Languages.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>Languages.resx</DependentUpon>
-	  </Compile>
-	</ItemGroup>
+	<ProjectExtensions>
+		<VisualStudio>
+			<UserProperties />
+		</VisualStudio>
+	</ProjectExtensions>
 
 </Project>

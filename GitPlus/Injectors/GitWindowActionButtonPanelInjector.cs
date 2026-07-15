@@ -30,90 +30,113 @@ public sealed partial class GitWindowActionButtonPanelInjector : InjectorBase
         if (fetchButtonElement.HasValue && fetchButtonElement.Value.Element is ButtonBase fetchButton)
         {
             var options = Extensions.GetRequiredService<GitPlusOption>();
-            var toolTip = Properties.Languages.AutoFetchToolTipSuffix;
+            var toolTip = Assets.Languages.AutoFetchToolTipSuffix;
             var oldToolTip = fetchButton.ToolTip.ToString();
             if (oldToolTip.Contains(toolTip))
             {
                 var index = oldToolTip.IndexOf(toolTip, StringComparison.Ordinal);
                 oldToolTip = oldToolTip.Substring(0, index);
             }
-            fetchButton.ToolTip = $"{oldToolTip}{(options.AutoFetchEnabled ? toolTip : string.Empty)}";
+            fetchButton.ToolTip = $"{oldToolTip}{(options.AutoFetch.UseAutoFetch ? toolTip : string.Empty)}";
             logger.LogTrace("[GitWindowActionButtonPanelInjector] fetch button tooltip updated.");
         }
 
-        var pullButtonElement = await buttonPanel.GetChildIndexAsync("pullButton", cancellationToken);
-        if (pullButtonElement.HasValue && pullButtonElement.Value.Element is ButtonBase pullButton)
+        var pullWithStashButtonElement = await buttonPanel.GetChildIndexAsync("pullWithStashButton", cancellationToken);
+        if (pullWithStashButtonElement is null)
         {
-            var pullWithStash = new ImageButton();
-            pullWithStash.CopyLocalValuesFrom(pullButton);
-            pullWithStash.Name = "pullWithStashButton";
-            pullWithStash.ImageNormal = Application.Current.FindResource("PullWithStashIconNormal") as ImageSource;
-            pullWithStash.ImageHover = Application.Current.FindResource("PullWithStashIconHover") as ImageSource;
-            pullWithStash.ImagePressed = Application.Current.FindResource("PullWithStashIconPressed") as ImageSource;
-            pullWithStash.Style = Application.Current.FindResource("GitButtonStyle") as Style;
-            pullWithStash.SetBinding(UIElement.VisibilityProperty, BindingOperations.GetBinding(pullButton, UIElement.VisibilityProperty));
-            pullWithStash.Command = new AsyncRelayCommand(async () =>
+            var pullButtonElement = await buttonPanel.GetChildIndexAsync("pullButton", cancellationToken);
+            if (pullButtonElement is not null && pullButtonElement.Value.Element is ButtonBase pullButton)
             {
-                if (!pullButton.Command.CanExecute(null))
-                {
-                    logger.LogDebug("[GitWindowActionButtonPanelInjector] PullWithStash: pull command not executable — skipping.");
-                    return;
-                }
-
-                var guid = Guid.NewGuid();
                 var options = Extensions.GetRequiredService<GitPlusOption>();
-                bool needStashPop = false;
-
-                pullButton.DataContext.ShowNotification(Properties.Languages.FetchingStatus, guid: guid);
-                var result = await git.StatusAsync();
-                if (!result.IsSuccess)
+                var pullWithStash = new ImageButton();
+                pullWithStash.CopyLocalValuesFrom(pullButton);
+                pullWithStash.Name = "pullWithStashButton";
+                pullWithStash.ImageNormal = Application.Current.FindResource("PullWithStashIconNormal") as ImageSource;
+                pullWithStash.ImageHover = Application.Current.FindResource("PullWithStashIconHover") as ImageSource;
+                pullWithStash.ImagePressed = Application.Current.FindResource("PullWithStashIconPressed") as ImageSource;
+                pullWithStash.Style = Application.Current.FindResource("GitStatusButtonStyle") as Style;
+                pullWithStash.Visibility = options.Pull.AutoPullVisible ? Visibility.Visible : Visibility.Collapsed;
                 {
-                    logger.LogWarning("PullWithStash: status check failed: {Error}", result.Error);
-                    pullButton.DataContext.ShowError(string.Format(Properties.Languages.FetchStatusFailed, result.Error));
-                    return;
-                }
-
-                if (result.Output.Contains("Changes to be committed:") || result.Output.Contains("Changes not staged for commit:"))
-                {
-                    pullButton.DataContext.ShowNotification(Properties.Languages.StashingChanges, guid: guid);
-                    result = await git.StashPushAsync();
-                    if (!result.IsSuccess)
+                    var actionButtonElement = await buttonPanel.GetChildIndexAsync("actionButton", cancellationToken);
+                    if (actionButtonElement is not null && actionButtonElement.Value.Element is ButtonBase actionButton)
                     {
-                        logger.LogWarning("PullWithStash: stash push failed: {Error}", result.Error);
-                        pullButton.DataContext.ShowError(string.Format(Properties.Languages.StashFailed, result.Error));
-                        return;
-                    }
-                    needStashPop = true;
-                }
-
-                pullButton.DataContext.ShowNotification(Properties.Languages.Pulling, guid: guid);
-                var pullResult = await git.PullAsync(options.UseRebase);
-                if (!pullResult.IsSuccess)
-                {
-                    logger.LogWarning("PullWithStash: pull failed: {Error}", pullResult.Error);
-                    pullButton.DataContext.ShowError(string.Format(Properties.Languages.PullFailed, pullResult.Error));
-                }
-
-                if (needStashPop)
-                {
-                    pullButton.DataContext.ShowNotification(Properties.Languages.RestoringStash, guid: guid);
-                    result = await git.StashPopAsync();
-                    if (!result.IsSuccess)
-                    {
-                        logger.LogWarning("PullWithStash: stash pop failed: {Error}", result.Error);
-                        pullButton.DataContext.ShowError(string.Format(Properties.Languages.StashPopFailed, result.Error));
-                        return;
+                        DependencyPropertyDescriptor.FromProperty(UIElement.VisibilityProperty, typeof(UIElement))
+                            .AddValueChanged(actionButton, (s, e) =>
+                            {
+                                var _options = Extensions.GetRequiredService<GitPlusOption>();
+                                if (actionButton.Visibility == Visibility.Visible)
+                                {
+                                    pullWithStash.Visibility = Visibility.Collapsed;
+                                }
+                                else
+                                {
+                                    pullWithStash.Visibility = _options.Pull.AutoPullVisible ? Visibility.Visible : Visibility.Collapsed;
+                                }
+                            });
                     }
                 }
+                pullWithStash.ToolTip = Assets.Languages.PullWithStashToolTip;
+                pullWithStash.Command = new AsyncRelayCommand(async () =>
+                {
+                    if (!pullButton.Command.CanExecute(null))
+                    {
+                        logger.LogDebug("[GitWindowActionButtonPanelInjector] PullWithStash: pull command not executable — skipping.");
+                        return;
+                    }
+                    var guid = Guid.NewGuid();
+                    var _options = Extensions.GetRequiredService<GitPlusOption>();
+                    bool needStashPop = false;
 
-                pullButton.DataContext.ShowNotification(pullResult.Output, guid: guid);
+                    pullButton.DataContext.ShowNotification(Assets.Languages.FetchingStatus, guid: guid);
+                    var result = await git.StatusAsync();
+                    if (!result.IsSuccess)
+                    {
+                        logger.LogWarning("PullWithStash: status check failed: {Error}", result.Error);
+                        pullButton.DataContext.ShowError(string.Format(Assets.Languages.FetchStatusFailed, result.Error));
+                        return;
+                    }
 
-                await Task.Delay(5000);
-                pullButton.DataContext.HideNotification(guid);
-            });
-            pullWithStash.ToolTip = Properties.Languages.PullWithStashToolTip;
-            await buttonPanel.InsertElementAsync(pullWithStash, pullButtonElement.Value.Index + 1, cancellationToken);
-            logger.LogTrace("[GitWindowActionButtonPanelInjector] pull-with-stash button created.");
+                    if (result.Output.Contains("Changes to be committed:") || result.Output.Contains("Changes not staged for commit:"))
+                    {
+                        pullButton.DataContext.ShowNotification(Assets.Languages.StashingChanges, guid: guid);
+                        result = await git.StashPushAsync();
+                        if (!result.IsSuccess)
+                        {
+                            logger.LogWarning("PullWithStash: stash push failed: {Error}", result.Error);
+                            pullButton.DataContext.ShowError(string.Format(Assets.Languages.StashFailed, result.Error));
+                            return;
+                        }
+                        needStashPop = true;
+                    }
+
+                    pullButton.DataContext.ShowNotification(Assets.Languages.Pulling, guid: guid);
+                    var pullResult = await git.PullAsync(_options.Pull.UseRebase);
+                    if (!pullResult.IsSuccess)
+                    {
+                        logger.LogWarning("PullWithStash: pull failed: {Error}", pullResult.Error);
+                        pullButton.DataContext.ShowError(string.Format(Assets.Languages.PullFailed, pullResult.Error));
+                    }
+
+                    if (needStashPop)
+                    {
+                        pullButton.DataContext.ShowNotification(Assets.Languages.RestoringStash, guid: guid);
+                        result = await git.StashPopAsync();
+                        if (!result.IsSuccess)
+                        {
+                            logger.LogWarning("PullWithStash: stash pop failed: {Error}", result.Error);
+                            pullButton.DataContext.ShowError(string.Format(Assets.Languages.StashPopFailed, result.Error));
+                            return;
+                        }
+                    }
+
+                    pullButton.DataContext.ShowNotification(pullResult.Output, guid: guid);
+
+                    await Task.Delay(5000);
+                    pullButton.DataContext.HideNotification(guid);
+                });
+                await buttonPanel.InsertElementAsync(pullWithStash, pullButtonElement.Value.Index + 1, cancellationToken);
+                logger.LogTrace("[GitWindowActionButtonPanelInjector] pull-with-stash button created.");
+            }
         }
         stopwatch.Stop();
         logger.LogTrace("[GitWindowActionButtonPanelInjector] exit '{method}', elapsed={elapsed}ms", nameof(InjectAsync), stopwatch.ElapsedMilliseconds);

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="GitPlus/Resources/Logo.png" alt="GitPlus 图标" width="128" />
+  <img src="https://github.com/View12138/GitPlus/raw/main/GitPlus/Assets/Logo.png" alt="GitPlus 图标" width="128" />
 </p>
 
 <h1 align="center">Git +</h1>
@@ -7,11 +7,11 @@
 <p align="center">
   <strong>Visual Studio Git 增强扩展</strong>
   <br />
-  在 VS 内置 Git 工具之上，提供工具栏按钮、自动 Fetch 和智能同步功能。
+  在 VS 内置 Git 工具之上，提供工具栏按钮、自动 Fetch、智能同步和约定式提交功能。
 </p>
 
 <p align="center">
-  <a href="README.md">English Documentation</a>
+  <a href="https://github.com/View12138/GitPlus/blob/main/README.md">English Documentation</a>
 </p>
 
 ---
@@ -33,6 +33,16 @@
 
 按可配置的时间间隔，在后台定期执行 `git fetch --all --prune`。无需手动操作即可保持与远程仓库同步。自动 Fetch 的间隔信息会显示在 Fetch 按钮的提示文本中。
 
+### 📝 约定式提交
+
+将约定式提交模板直接插入 Git 提交消息框。**插入约定式提交模板** 按钮被注入到 Git 更改窗口，紧邻工作项链接按钮。支持：
+
+- 从预定义的提交类型中选择（`feat`、`fix`、`docs`、`style`、`refactor`、`perf`、`test`、`chore`、`ci`、`build`、`revert`），每种类型均附带 emoji 和描述
+- 可选的**范围**支持 — 从解决方案根目录中的可自定义范围 JSON 文件读取
+- **BREAKING CHANGE** 尾注插入
+- 类型替换 — 选择不同类型可替换消息中已有的类型
+- 通过 `GENERATE SCOPESFILE` 菜单项生成范围模板文件
+
 ### ⚙️ 可配置选项
 
 所有选项可通过 **工具 → 选项 → Git +** 访问：
@@ -44,6 +54,10 @@
 | 自动 Fetch | 启用自动 Fetch | ✅ 开 | 开启/关闭后台自动 Fetch |
 | 自动 Fetch | Fetch 间隔（分钟） | 5 | 自动 Fetch 调用间隔 |
 | 拉取 | 拉取时使用 Rebase | ✅ 开 | 使用 `--rebase` 代替合并 |
+| 拉取 | 显示自动拉取按钮 | ✅ 开 | 显示/隐藏自动拉取按钮 |
+| 提交 | 显示约定式提交按钮 | ✅ 开 | 显示/隐藏约定式提交按钮 |
+| 提交 | 使用范围 | ✅ 开 | 在提交消息中包含范围 |
+| 提交 | 约定式提交范围文件名 | ConventionalCommitScopes.json | 用于提交消息范围的文件名 |
 | 日志 | 日志级别 | 信息 | Git + 输出窗格的日志详细程度 |
 
 ### 🌐 本地化
@@ -55,10 +69,11 @@
 ## 📸 截图
 
 <p align="center">
-  <img src="GitPlus/Resources/Screenshots1.png" height="200px" alt="Git 更改工具栏中的 Pull with Stash 按钮" />
+  <img width="340px" src="https://github.com/View12138/GitPlus/raw/main/GitPlus/Assets/Screenshots1.png" alt="GitPlus Pull with Stash" style="vertical-align: top;" />
+  <img width="340px" src="https://github.com/View12138/GitPlus/raw/main/GitPlus/Assets/Screenshots2.png" alt="GitPlus 约定式提交" style="vertical-align: top;" />
 </p>
 
-*注入到 Git 更改窗口工具栏中的 **Pull with Stash（拉取+储藏）** 按钮，与原生 Fetch、Pull、Push 按钮并列显示。*
+*注入到 Git 更改窗口中的 **Pull with Stash（拉取+储藏）** 按钮和 **约定式提交** 按钮。*
 
 ---
 
@@ -66,7 +81,7 @@
 
 ### 前提条件
 
-- **Visual Studio 2022**（版本 17.14 或更高）
+- **Visual Studio 2022**（版本 17.0 或更高）
 - **.NET Framework 4.7.2** 或更高
 
 ### 通过 VSIX 安装
@@ -106,16 +121,22 @@ GitPlus/
 │   └── GitPlusOptionPage.cs       # 工具 → 选项 对话框页
 ├── Injectors/
 │   ├── InjectorBase.cs            # UI 注入器抽象基类
-│   └── GitWindowActionButtonPanelInjector.cs
+│   ├── GitWindowActionButtonPanelInjector.cs
+│   └── GitWorkItemActionStackPanelInjector.cs
 ├── Services/
 │   ├── WindowWatcher.cs           # DTE 窗口生命周期事件
 │   ├── GitCommandService.cs       # git.exe 进程封装
 │   └── AutoFetchService.cs        # 定时自动 Fetch
 ├── Commons/
 │   ├── Extensions.cs              # DI / WPF VisualTree 辅助方法
+│   ├── FileBrowserEditor.cs       # 文件浏览器 UITypeEditor
 │   ├── GitResult.cs               # Git 操作结果模型
 │   ├── GitWindowLocator.cs        # VisualTree 元素定位器
-│   └── GitWindowViewModelExtensions.cs
+│   ├── GitWindowViewModelExtensions.cs
+│   └── LocalizedAttributes.cs     # 本地化特性类
+├── Assets/
+│   ├── conventional-commits-rules.json
+│   └── conventional-commits-rules.zh-Hans.json
 └── Resources/
     ├── GitButtonStyle.xaml        # ImageButton 控件模板
     └── Icons.xaml                 # DrawingImage 矢量图标
@@ -149,7 +170,7 @@ dotnet test GitPlus.slnx
 
 ## 📄 许可证
 
-本项目基于 MIT 许可证开源 — 详见 [LICENSE.txt](LICENSE.txt)。
+本项目基于 MIT 许可证开源 — 详见 [LICENSE.txt](https://github.com/View12138/GitPlus/blob/main/LICENSE.txt)。
 
 ---
 

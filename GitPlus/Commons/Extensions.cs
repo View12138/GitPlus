@@ -96,6 +96,37 @@ public static class Extensions
         return null;
     }
 
+    public static async Task<TUIElement?> FindChildAsync<TUIElement>(this DependencyObject parent, bool recursive = true, CancellationToken cancellationToken = default)
+        where TUIElement : FrameworkElement
+    {
+        if (parent == null)
+            return null;
+
+        await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+        for (int index = 0; index < VisualTreeHelper.GetChildrenCount(parent); index++)
+        {
+            var child = VisualTreeHelper.GetChild(parent, index) as FrameworkElement;
+            if (child != null)
+            {
+
+                if (child.GetType() == typeof(TUIElement))
+                {
+                    return (TUIElement)child;
+                }
+                if (recursive)
+                {
+                    child = await child.FindChildAsync<TUIElement>(recursive, cancellationToken);
+                    if (child != null)
+                    {
+                        return (TUIElement)child;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
     public static async Task<(int Index, FrameworkElement Element)?> GetChildIndexAsync(this FrameworkElement parent, string elementName, CancellationToken cancellationToken = default)
     {
         await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
@@ -186,4 +217,77 @@ public static class Extensions
     }
     #endregion
 
+    #region Resources
+    public static Uri GetResourceUri(this string resourceName, ResourceFolders folder)
+        => new($"pack://application:,,,/GitPlus;component/{folder}/{resourceName}", UriKind.Absolute);
+
+    extension(System.Windows.Resources.ContentTypes)
+    {
+        public static string ApplicationJson => "application/json";
+    }
+    extension(Application)
+    {
+        public static System.Windows.Resources.StreamResourceInfo? GetResourceStream(string defaultResourceName, ResourceFolders folder, System.Globalization.CultureInfo cultureInfo)
+        {
+            var logger = GetRequiredService<ILogger>();
+            try
+            {
+                logger.LogTrace("[Extensions] enter '{method}', defaultResourceName='{defaultResourceName}', folder='{folder}', cultureInfo='{cultureInfo}'", nameof(GetResourceStream), defaultResourceName, folder, cultureInfo);
+                var culture = cultureInfo;
+                while (culture != System.Globalization.CultureInfo.InvariantCulture)
+                {
+                    var index = defaultResourceName.LastIndexOf('.');
+                    var resourceName = index <= 0 ? defaultResourceName : defaultResourceName.Insert(index, $".{culture.Name}");
+                    System.Windows.Resources.StreamResourceInfo? stream = null;
+                    try
+                    {
+                        stream = Application.GetResourceStream(resourceName.GetResourceUri(folder));
+                    }
+                    catch (IOException)
+                    {
+                        logger.LogDebug("[Extensions] culture resource '{}' not found.", resourceName);
+                    }
+                    if (stream != null)
+                    {
+                        logger.LogDebug("[Extensions] use culture resource '{}'.", resourceName);
+                        return stream;
+                    }
+                    culture = culture.Parent;
+                }
+
+                logger.LogDebug("[Extensions] use default resource '{}'.", defaultResourceName);
+                try
+                {
+                    return Application.GetResourceStream(defaultResourceName.GetResourceUri(folder));
+                }
+                catch (IOException)
+                {
+                    logger.LogDebug("[Extensions] default resource '{}' not found.", defaultResourceName);
+                    return null;
+                }
+            }
+            finally
+            {
+                logger.LogTrace("[Extensions] exit '{method}'", nameof(RemoveElement));
+            }
+        }
+    }
+    #endregion
+
+    #region string
+    public static string ReplaceFirst(this string text, string oldValue, string newValue)
+    {
+        int index = text.IndexOf(oldValue, StringComparison.Ordinal);
+        if (index < 0)
+            return text;
+
+        return text.Substring(0, index) + newValue + text.Substring(index + oldValue.Length);
+    }
+    #endregion
+}
+
+public enum ResourceFolders
+{
+    Resources,
+    Assets,
 }

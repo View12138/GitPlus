@@ -22,14 +22,14 @@ public sealed partial class AutoFetchService : IDisposable
             return;
         }
 
-        var settings = Extensions.GetRequiredService<GitPlusOption>();
-        if (!settings.AutoFetchEnabled)
+        var option = Extensions.GetRequiredService<GitPlusOption>();
+        if (!option.AutoFetch.UseAutoFetch)
         {
             logger.LogDebug("Auto-fetch is disabled by options — not starting timer.");
             return;
         }
 
-        var interval = TimeSpan.FromMinutes(Math.Max(1, settings.AutoFetchIntervalMinutes));
+        var interval = TimeSpan.FromMinutes(Math.Max(1, option.AutoFetch.AutoFetchIntervalMinutes));
         timer = new Timer(_ => FetchSafe(), null, interval, interval);
         logger.LogTrace("[AutoFetchService] exit '{method}'", nameof(StartAsync));
     }
@@ -54,8 +54,8 @@ public sealed partial class AutoFetchService : IDisposable
         logger.LogTrace("[AutoFetchService] enter '{method}'", nameof(FetchSafe));
         try
         {
-            var settings = Extensions.GetRequiredService<GitPlusOption>();
-            if (!settings.AutoFetchEnabled)
+            var option = Extensions.GetRequiredService<GitPlusOption>();
+            if (!option.AutoFetch.UseAutoFetch)
             {
                 logger.LogDebug("[AutoFetchService] callback skipped — disabled in options.");
                 return;
@@ -67,7 +67,7 @@ public sealed partial class AutoFetchService : IDisposable
                 logger.LogDebug("[AutoFetchService] fetch succeeded.");
             }
 
-            var interval = TimeSpan.FromMinutes(Math.Max(1, settings.AutoFetchIntervalMinutes));
+            var interval = TimeSpan.FromMinutes(Math.Max(1, option.AutoFetch.AutoFetchIntervalMinutes));
             timer?.Change(interval, interval);
             logger.LogDebug("[AutoFetchService] timer rescheduled to {Interval}min.", interval.TotalMinutes);
         }

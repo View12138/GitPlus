@@ -50,4 +50,32 @@ public static class GitWindowLocator
         Logger.LogTrace("[GitWindowLocator] exit '{method}', elapsed={elapsed}ms", nameof(LocateGitCommentTextBoxAsync), stopwatch.ElapsedMilliseconds);
         return commentTextBox;
     }
+
+    public static async Task<StackPanel?> LocateGitWorkItemActionsStackPanelAsync(CancellationToken cancellationToken = default)
+    {
+        var stopwatch = Stopwatch.StartNew();
+        Logger.LogTrace("[GitWindowLocator] enter '{method}'", nameof(LocateGitWorkItemActionsStackPanelAsync));
+        await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+
+        var gitWindowMainGrid = await Application.Current.MainWindow.FindChildAsync("gitWindowMainGrid", cancellationToken: cancellationToken);
+        if (gitWindowMainGrid is null)
+        {
+            Logger.LogDebug("[GitWindowLocator] 'gitWindowMainGrid' not found.");
+            return null;
+        }
+
+        var workItemActions = await gitWindowMainGrid.FindChildAsync("WorkItemActions", cancellationToken: cancellationToken);
+        if (workItemActions is null)
+        {
+            stopwatch.Stop();
+            Logger.LogTrace("[GitWindowLocator] exit '{method}', elapsed={elapsed}ms", nameof(LocateGitCommentTextBoxAsync), stopwatch.ElapsedMilliseconds);
+            return null;
+        }
+        var stackPanel = await workItemActions.FindChildAsync<StackPanel>(cancellationToken: cancellationToken);
+        if (stackPanel is null)
+            Logger.LogDebug("[GitWindowLocator] 'StackPanel' not found inside 'WorkItemActions'.");
+        stopwatch.Stop();
+        Logger.LogTrace("[GitWindowLocator] exit '{method}', elapsed={elapsed}ms", nameof(LocateGitCommentTextBoxAsync), stopwatch.ElapsedMilliseconds);
+        return stackPanel;
+    }
 }

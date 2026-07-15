@@ -1,0 +1,83 @@
+{
+  "$schema": "D:\\repos\\repo-view\\GitPlus\\GitPlus\\Resources\\conventional-commits-rules.schema.json",
+  "rules": [
+    {
+      "type": "feat",
+      "emoji": "✨",
+      "title": "Features",
+      "description": "A new feature (MINOR)"
+    },
+    {
+      "type": "fix",
+      "emoji": "🐛",
+      "title": "Bug Fixes",
+      "description": "A bug fix (PATCH)"
+    },
+    {
+      "type": "docs",
+      "emoji": "📚",
+      "title": "Documentation",
+      "description": "Documentation only changes"
+    },
+    {
+      "type": "style",
+      "emoji": "💎",
+      "title": "Styles",
+      "description": "Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)"
+    },
+    {
+      "type": "refactor",
+      "emoji": "📦",
+      "title": "Code Refactoring",
+      "description": "A code change that neither fixes a bug nor adds a feature"
+    },
+    {
+      "type": "perf",
+      "emoji": "🚀",
+      "title": "Performance Improvements",
+      "description": "A code change that improves performance"
+    },
+    {
+      "type": "test",
+      "emoji": "🚨",
+      "title": "Tests",
+      "description": "Adding missing tests or correcting existing tests"
+    },
+    {
+      "type": "build",
+      "emoji": "🛠",
+      "title": "Builds",
+      "description": "Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)"
+    },
+    {
+      "type": "ci",
+      "emoji": "⚙️",
+      "title": "Continuous Integrations",
+      "description": "Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)"
+    },
+    {
+      "type": "chore",
+      "emoji": "♻️",
+      "title": "Chores",
+      "description": "Other changes that don't modify src or test files"
+    },
+    {
+      "type": "revert",
+      "emoji": "🗑",
+      "title": "Reverts",
+      "description": "Reverts a previous commit"
+    },
+    {
+      "type": "BREAKING CHANGE",
+      "emoji": "💥",
+      "title": "Breaking Changes",
+      "description": "Including a commit in the footnote with BREAKING CHANGE: or <type>(scope)! means a breaking API change was introduced. Breaking changes can be part of any type of commit. (MAJOR)"
+    },
+    {
+      "type": "GENERATE SCOPESFILE",
+      "emoji": "📝",
+      "title": "Generate Scopes File",
+      "description": "Generate a scopes template file using the configured file template path"
+    }
+  ]
+}

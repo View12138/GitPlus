@@ -1,6 +1,11 @@
 <Solution>
   <Folder Name="/Configurations/">
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="LICENSE.txt" />
     <File Path="nuget.config" />
+    <File Path="README.md" />
+    <File Path="README.zh.md" />
   </Folder>
   <Project Path="GitPlus.Tests/GitPlus.Tests.csproj" />
   <Project Path="GitPlus/GitPlus.csproj">

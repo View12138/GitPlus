@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GitPlus.Properties {
+namespace GitPlus.Assets {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace GitPlus.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GitPlus.Properties.Languages", typeof(Languages).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GitPlus.Assets.Languages", typeof(Languages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -88,20 +88,29 @@ namespace GitPlus.Properties {
         }
         
         /// <summary>
-        ///   查找类似 When enabled, periodically runs git fetch --all --prune in the background. 的本地化字符串。
+        ///   查找类似 Executable files (*.exe)|*.exe|All files (*.*)|*.* 的本地化字符串。
         /// </summary>
-        internal static string Option_AutoFetchEnabled_Description {
+        internal static string FileBrowser_ExecutableFilter {
             get {
-                return ResourceManager.GetString("Option_AutoFetchEnabled_Description", resourceCulture);
+                return ResourceManager.GetString("FileBrowser_ExecutableFilter", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Enable Auto Fetch 的本地化字符串。
+        ///   查找类似 Select git.exe 的本地化字符串。
         /// </summary>
-        internal static string Option_AutoFetchEnabled_DisplayName {
+        internal static string FileBrowser_SelectGitTitle {
             get {
-                return ResourceManager.GetString("Option_AutoFetchEnabled_DisplayName", resourceCulture);
+                return ResourceManager.GetString("FileBrowser_SelectGitTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Insert Conventional Commit Template 的本地化字符串。
+        /// </summary>
+        internal static string InsertConventionalCommitToolTip {
+            get {
+                return ResourceManager.GetString("InsertConventionalCommitToolTip", resourceCulture);
             }
         }
         
@@ -124,20 +133,74 @@ namespace GitPlus.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Determines whether to show the auto pull button in the toolbar. 的本地化字符串。
+        /// </summary>
+        internal static string Option_AutoPullVisible_Description {
+            get {
+                return ResourceManager.GetString("Option_AutoPullVisible_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Show Auto Pull Button 的本地化字符串。
+        /// </summary>
+        internal static string Option_AutoPullVisible_DisplayName {
+            get {
+                return ResourceManager.GetString("Option_AutoPullVisible_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Determines the file name for conventional commit message scopes. (Use the menu item &apos;Generate Scope Template&apos; to generate the template file) 的本地化字符串。
+        /// </summary>
+        internal static string Option_ConventionalCommitScopeFileName_Description {
+            get {
+                return ResourceManager.GetString("Option_ConventionalCommitScopeFileName_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Conventional Commit Scope File Name 的本地化字符串。
+        /// </summary>
+        internal static string Option_ConventionalCommitScopeFileName_DisplayName {
+            get {
+                return ResourceManager.GetString("Option_ConventionalCommitScopeFileName_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Determines whether to show the conventional commits button in the toolbar. 的本地化字符串。
+        /// </summary>
+        internal static string Option_ConventionalCommitsVisible_Description {
+            get {
+                return ResourceManager.GetString("Option_ConventionalCommitsVisible_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Show Conventional Commits Button 的本地化字符串。
+        /// </summary>
+        internal static string Option_ConventionalCommitsVisible_DisplayName {
+            get {
+                return ResourceManager.GetString("Option_ConventionalCommitsVisible_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Path to git.exe. Leave empty to use the system PATH. 的本地化字符串。
         /// </summary>
-        internal static string Option_GitFilePath_Description {
+        internal static string Option_GitFileName_Description {
             get {
-                return ResourceManager.GetString("Option_GitFilePath_Description", resourceCulture);
+                return ResourceManager.GetString("Option_GitFileName_Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 Git File Path 的本地化字符串。
         /// </summary>
-        internal static string Option_GitFilePath_DisplayName {
+        internal static string Option_GitFileName_DisplayName {
             get {
-                return ResourceManager.GetString("Option_GitFilePath_DisplayName", resourceCulture);
+                return ResourceManager.GetString("Option_GitFileName_DisplayName", resourceCulture);
             }
         }
         
@@ -178,6 +241,42 @@ namespace GitPlus.Properties {
         }
         
         /// <summary>
+        ///   查找类似 When enabled, periodically runs git fetch --all --prune in the background. 的本地化字符串。
+        /// </summary>
+        internal static string Option_UseAutoFetch_Description {
+            get {
+                return ResourceManager.GetString("Option_UseAutoFetch_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Enable Auto Fetch 的本地化字符串。
+        /// </summary>
+        internal static string Option_UseAutoFetch_DisplayName {
+            get {
+                return ResourceManager.GetString("Option_UseAutoFetch_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Determines whether to use scope in commit messages. 的本地化字符串。
+        /// </summary>
+        internal static string Option_UseConventionalCommitScope_Description {
+            get {
+                return ResourceManager.GetString("Option_UseConventionalCommitScope_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Use Scope 的本地化字符串。
+        /// </summary>
+        internal static string Option_UseConventionalCommitScope_DisplayName {
+            get {
+                return ResourceManager.GetString("Option_UseConventionalCommitScope_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 When enabled, git pull uses --rebase instead of --ff-only. 的本地化字符串。
         /// </summary>
         internal static string Option_UseRebase_Description {
@@ -201,6 +300,15 @@ namespace GitPlus.Properties {
         internal static string OptionCategory_Auto_Fetch {
             get {
                 return ResourceManager.GetString("OptionCategory_Auto_Fetch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Commit 的本地化字符串。
+        /// </summary>
+        internal static string OptionCategory_Commit {
+            get {
+                return ResourceManager.GetString("OptionCategory_Commit", resourceCulture);
             }
         }
         
@@ -264,6 +372,24 @@ namespace GitPlus.Properties {
         internal static string RestoringStash {
             get {
                 return ResourceManager.GetString("RestoringStash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Scopes file already exists. Please delete it first if you want to regenerate. 的本地化字符串。
+        /// </summary>
+        internal static string ScopesFileExistsMessage {
+            get {
+                return ResourceManager.GetString("ScopesFileExistsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Scopes File Exists 的本地化字符串。
+        /// </summary>
+        internal static string ScopesFileExistsTitle {
+            get {
+                return ResourceManager.GetString("ScopesFileExistsTitle", resourceCulture);
             }
         }
         

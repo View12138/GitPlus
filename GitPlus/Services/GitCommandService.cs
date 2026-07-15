@@ -16,7 +16,7 @@ public sealed partial class GitCommandService
         => RunAsync("fetch --all --prune", cancellationToken);
 
     public Task<GitResult> PullAsync(bool rebase = false, CancellationToken cancellationToken = default)
-        => RunAsync($"pull{(rebase ? " --rebase=true" : "")}", cancellationToken);
+        => RunAsync($"pull{(rebase ? " --rebase=true" : "--ff-only")}", cancellationToken);
 
     public Task<GitResult> PushAsync(CancellationToken cancellationToken = default)
         => RunAsync("push", cancellationToken);
@@ -100,11 +100,11 @@ public sealed partial class GitCommandService
         {
             var option = Extensions.GetRequiredService<GitPlusOption>();
             var gitFileName = "git";
-            if (!string.IsNullOrWhiteSpace(option.GitFilePath)
-                && Path.GetFileName(option.GitFilePath).Equals("git.exe", StringComparison.OrdinalIgnoreCase)
-                && File.Exists(option.GitFilePath))
+            if (!string.IsNullOrWhiteSpace(option.General.GitFileName)
+                && Path.GetFileName(option.General.GitFileName).Equals("git.exe", StringComparison.OrdinalIgnoreCase)
+                && File.Exists(option.General.GitFileName))
             {
-                gitFileName = option.GitFilePath;
+                gitFileName = option.General.GitFileName;
             }
             p.StartInfo = new ProcessStartInfo
             {
@@ -122,12 +122,12 @@ public sealed partial class GitCommandService
 
             var outTask = Task.Run(() => p.StandardOutput.ReadToEnd());
             var errTask = Task.Run(() => p.StandardError.ReadToEnd());
-            if (!Task.WhenAll(outTask, errTask).Wait(option.TimeoutSeconds * 1000, ct))
+            if (!Task.WhenAll(outTask, errTask).Wait(option.General.TimeoutSeconds * 1000, ct))
             {
                 try { p.Kill(); }
                 catch (Exception killEx) { logger.LogError(killEx, "failed to kill git {args} (PID={Pid}).", args, p.Id); }
-                logger.LogWarning("git {args} timed out after {Timeout}s.", args, option.TimeoutSeconds);
-                return GitResult.Failure($"Timed out after {option.TimeoutSeconds}s.");
+                logger.LogWarning("git {args} timed out after {Timeout}s.", args, option.General.TimeoutSeconds);
+                return GitResult.Failure($"Timed out after {option.General.TimeoutSeconds}s.");
             }
             p.WaitForExit();
             var o = outTask.Result.Trim();

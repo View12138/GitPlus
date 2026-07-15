@@ -12,8 +12,8 @@ public sealed class FileBrowserEditor : UITypeEditor
     {
         var dialog = new Microsoft.Win32.OpenFileDialog
         {
-            Title = "Select git.exe",
-            Filter = "Executable files (*.exe)|*.exe|All files (*.*)|*.*",
+            Title = Assets.Languages.FileBrowser_SelectGitTitle,
+            Filter = Assets.Languages.FileBrowser_ExecutableFilter,
             CheckFileExists = true,
             InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
         };
