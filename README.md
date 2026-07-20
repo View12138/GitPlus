@@ -41,24 +41,43 @@ Insert conventional commit templates directly into the Git commit message box. A
 - Optional **scope** support — reads from a customizable scope JSON file in the solution root
 - **BREAKING CHANGE** footer insertion
 - Type replacement — selecting a different type replaces the existing one in the message
-- Generates scope template file via the `GENERATE SCOPESFILE` menu item
+- Generates option template file via the `GENERATE OPTIONFILE` menu item
+
+### ✅ Conventional Commit Syntax Validation
+
+Real-time syntax validation of commit messages against the [Conventional Commits](https://www.conventionalcommits.org/) specification. When **strict validation** is enabled (via the `ConventionalCommitOption.json` option file), the extension:
+
+- **Parses** the commit message in real time using a custom lexer/parser that understands the full conventional commit grammar (type, scope, description, body, footers)
+- **Highlights** syntax errors and warnings directly in the commit text box with wave underlines — red for errors, yellow for warnings
+- **Outlines** the commit message area with a red border when the format is invalid
+- **Disables** the Commit button until all errors are resolved
+- **Displays** diagnostic messages (CC001–CC014) describing exactly what's wrong
+
+The validator checks for:
+- Missing or invalid commit type
+- Missing colon or space after type/scope
+- Malformed scope parentheses
+- Missing description text
+- Invalid footer format (e.g., `BREAKING CHANGE`, `Reviewed-by`)
+- Unexpected extra blank lines or whitespace
+
+GitPlus supports **repository-level commit policies**. The `ConventionalCommitOption.json` file can be committed into source control, allowing all team members to share the same commit message rules. Generated from the **Insert Conventional Commit** menu, it defines custom commit types, allowed scopes, and custom footer keys — ensuring consistent commit conventions across the entire team.
 
 ### ⚙️ Configurable Options
 
 All options are accessible via **Tools → Options → Git +**:
 
-| Category | Option | Default | Description |
-|----------|--------|---------|-------------|
-| General | Timeout (seconds) | 30 | Timeout for git operations |
-| General | Git File Path | *(system PATH)* | Custom path to `git.exe` |
-| Auto Fetch | Enable Auto Fetch | ✅ On | Toggle background auto-fetch |
-| Auto Fetch | Fetch Interval (minutes) | 5 | Minutes between auto-fetch calls |
-| Pull | Use Rebase on Pull | ✅ On | Use `--rebase` instead of merge |
-| Pull | Show Auto Pull Button | ✅ On | Show/hide the auto pull button |
-| Commit | Show Conventional Commits Button | ✅ On | Show/hide the conventional commits button |
-| Commit | Use Scope | ✅ On | Include scope in commit messages |
-| Commit | Conventional Commit Scope File Name | ConventionalCommitScopes.json | File name for commit message scopes |
-| Logging | Log Level | Information | Output verbosity in the Git + pane |
+| Category   | Option                              | Default                       | Description                               |
+|------------|-------------------------------------|-------------------------------|-------------------------------------------|
+| General    | Timeout (seconds)                   | 30                            | Timeout for git operations                |
+| General    | Git File Path                       | *(system PATH)*               | Custom path to `git.exe`                  |
+| Auto Fetch | Enable Auto Fetch                   | ✅ On                          | Toggle background auto-fetch              |
+| Auto Fetch | Fetch Interval (minutes)            | 5                             | Minutes between auto-fetch calls          |
+| Pull       | Use Rebase on Pull                  | ✅ On                          | Use `--rebase` instead of merge           |
+| Pull       | Show Auto Pull Button               | ✅ On                          | Show/hide the auto pull button            |
+| Commit     | Show Conventional Commits Button    | ✅ On                          | Show/hide the conventional commits button |
+| Commit     | Conventional Commit Scope File Name | ConventionalCommitScopes.json | File name for commit message scopes       |
+| Logging    | Log Level                           | Information                   | Output verbosity in the Git + pane        |
 
 ### 🌐 Localization
 
@@ -69,11 +88,10 @@ The extension UI is localized in English and Simplified Chinese (zh-Hans).
 ## 📸 Screenshots
 
 <p align="center">
-  <img width="340px" src="https://github.com/View12138/GitPlus/raw/main/GitPlus/Assets/Screenshots1.png" alt="GitPlus Pull with Stash" style="vertical-align: top;" />
-  <img width="340px" src="https://github.com/View12138/GitPlus/raw/main/GitPlus/Assets/Screenshots2.png" alt="GitPlus Conventional Commits" style="vertical-align: top;" />
+  <img width="776px" src="https://github.com/View12138/GitPlus/raw/main/GitPlus/Assets/Screenshots1.gif" alt="GitPlus" style="vertical-align: top;" />
 </p>
 
-*The injected **Pull with Stash** button and **Conventional Commits** button in the Git Changes window.*
+*The injected **Pull with Stash** button, **Conventional Commits** button, and real-time **syntax validation** in the Git Changes window.*
 
 ---
 
@@ -86,7 +104,7 @@ The extension UI is localized in English and Simplified Chinese (zh-Hans).
 
 ### From VSIX
 
-Download the `.vsix` from [Releases](https://github.com/View12138/GitPlus/releases) and double-click to install. Or build from source:
+Download the `.vsix` from [Releases](https://github.com/View12138/GitPlus/releases/latest) and double-click to install. Or build from source:
 
 ```powershell
 dotnet build GitPlus.slnx -c Release
@@ -133,7 +151,8 @@ GitPlus/
 │   ├── GitResult.cs               # Git operation result model
 │   ├── GitWindowLocator.cs        # VisualTree element locator
 │   ├── GitWindowViewModelExtensions.cs
-│   └── LocalizedAttributes.cs     # Localized attribute classes
+│   ├── LocalizedAttributes.cs     # Localized attribute classes
+│   └── ConventionalCommitSyntaxs/ # Commit message lexer/parser/diagnostics
 ├── Assets/
 │   ├── conventional-commits-rules.json
 │   └── conventional-commits-rules.zh-Hans.json

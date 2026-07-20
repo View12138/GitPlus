@@ -19,7 +19,7 @@ public sealed partial class GitWindowActionButtonPanelInjector : InjectorBase
         logger.LogTrace("[GitWindowActionButtonPanelInjector] enter '{method}', caption=\"{Caption}\"", nameof(InjectAsync), caption);
         await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
 
-        var buttonPanel = await GitWindowLocator.LocateGitButtonPanelAsync(cancellationToken) as Panel;
+        var buttonPanel = await GitWindowLocator.LocateChildElementAsync("buttonPanel", cancellationToken) as Panel;
         if (buttonPanel is null)
         {
             logger.LogDebug("[GitWindowActionButtonPanelInjector] button panel not found — aborting injection.");
@@ -30,7 +30,7 @@ public sealed partial class GitWindowActionButtonPanelInjector : InjectorBase
         if (fetchButtonElement.HasValue && fetchButtonElement.Value.Element is ButtonBase fetchButton)
         {
             var options = Extensions.GetRequiredService<GitPlusOption>();
-            var toolTip = Assets.Languages.AutoFetchToolTipSuffix;
+            var toolTip = Assets.Languages.ToolTip_AutoFetchToolTipSuffix;
             var oldToolTip = fetchButton.ToolTip.ToString();
             if (oldToolTip.Contains(toolTip))
             {

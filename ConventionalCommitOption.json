@@ -1,0 +1,19 @@
+{
+  "EnableStrictValidation": true,
+  "Scopes": [
+    "core",
+    "ui"
+  ],
+  "CustomRules": [
+    {
+      "Type": "agent",
+      "Emoji": "🤖",
+      "Title": "AI Agent",
+      "Description": "使用 AI Agent进行提交"
+    }
+  ],
+  "CustomFooters": [
+    "Reviewed-by",
+    ""
+  ]
+}

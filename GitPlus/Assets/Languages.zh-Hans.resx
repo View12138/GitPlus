@@ -192,7 +192,7 @@
   <data name="StashPopFailed" xml:space="preserve">
     <value>储藏弹出失败：{0}</value>
   </data>
-  <data name="AutoFetchToolTipSuffix" xml:space="preserve">
+  <data name="ToolTip_AutoFetchToolTipSuffix" xml:space="preserve">
     <value> (自动提取)</value>
   </data>
   <data name="OptionCategory_Commit" xml:space="preserve">
@@ -216,25 +216,73 @@
   <data name="Option_UseConventionalCommitScope_Description" xml:space="preserve">
     <value>确定是否在提交消息中使用范围。</value>
   </data>
-  <data name="Option_ConventionalCommitScopeFileName_DisplayName" xml:space="preserve">
-    <value>约定式提交范围文件名</value>
+  <data name="Option_ConventionalCommitOptionFileName_DisplayName" xml:space="preserve">
+    <value>约定式提交配置文件名</value>
   </data>
-  <data name="Option_ConventionalCommitScopeFileName_Description" xml:space="preserve">
-    <value>确定用于约定式提交消息范围的文件名。（使用菜单项"生成范围模板文件"生成模板文件）</value>
+  <data name="Option_ConventionalCommitOptionFileName_Description" xml:space="preserve">
+    <value>确定用于约定式提交消息配置的文件名。（使用菜单项"生成配置模板文件"生成模板文件）</value>
   </data>
   <data name="InsertConventionalCommitToolTip" xml:space="preserve">
     <value>插入约定式提交模板</value>
   </data>
-  <data name="ScopesFileExistsTitle" xml:space="preserve">
-    <value>范围文件已存在</value>
+  <data name="OptionFileExistsTitle" xml:space="preserve">
+    <value>配置文件已存在</value>
   </data>
-  <data name="ScopesFileExistsMessage" xml:space="preserve">
-    <value>范围文件已存在。如需重新生成，请先删除现有文件。</value>
+  <data name="OptionFileExistsMessage" xml:space="preserve">
+    <value>配置文件已存在。如需重新生成，请先删除现有文件。</value>
   </data>
   <data name="FileBrowser_SelectGitTitle" xml:space="preserve">
     <value>选择 git.exe</value>
   </data>
   <data name="FileBrowser_ExecutableFilter" xml:space="preserve">
     <value>可执行文件 (*.exe)|*.exe|所有文件 (*.*)|*.*</value>
+  </data>
+  <data name="Diagnostic_MissingCommitType" xml:space="preserve">
+    <value>缺少提交类型</value>
+  </data>
+  <data name="Diagnostic_InvalidCommitType" xml:space="preserve">
+    <value>无效的提交类型</value>
+  </data>
+  <data name="Diagnostic_MissingSpace" xml:space="preserve">
+    <value>缺少空格</value>
+  </data>
+  <data name="Diagnostic_UnexpectedExtraSpaces" xml:space="preserve">
+    <value>多余的空格</value>
+  </data>
+  <data name="Diagnostic_MissingScope" xml:space="preserve">
+    <value>缺少范围</value>
+  </data>
+  <data name="Diagnostic_InvalidScope" xml:space="preserve">
+    <value>无效的范围</value>
+  </data>
+  <data name="Diagnostic_MissingOpenParen" xml:space="preserve">
+    <value>缺少 '('</value>
+  </data>
+  <data name="Diagnostic_MissingCloseParen" xml:space="preserve">
+    <value>缺少 ')'</value>
+  </data>
+  <data name="Diagnostic_MissingColon" xml:space="preserve">
+    <value>缺少 ':'</value>
+  </data>
+  <data name="Diagnostic_MissingTextValue" xml:space="preserve">
+    <value>缺少 {0} 值</value>
+  </data>
+  <data name="Diagnostic_MissingNewline" xml:space="preserve">
+    <value>缺少换行</value>
+  </data>
+  <data name="Diagnostic_UnexpectedExtraLines" xml:space="preserve">
+    <value>多余的空行</value>
+  </data>
+  <data name="Diagnostic_InvalidFooterKey" xml:space="preserve">
+    <value>无效的注脚</value>
+  </data>
+  <data name="DiagnosticValue_Subject" xml:space="preserve">
+    <value>主题</value>
+  </data>
+  <data name="DiagnosticValue_Footer" xml:space="preserve">
+    <value>注脚</value>
+  </data>
+  <data name="Diagnostic_UnexpectedExtraWhitespace" xml:space="preserve">
+    <value>多余的空白</value>
   </data>
 </root>

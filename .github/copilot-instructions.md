@@ -99,7 +99,7 @@
 
 ## 测试
 
-- xunit + Moq，`net472`，引用 `PresentationFramework`/`PresentationCore`/`WindowsBase`
+- MSTest，`net472`，引用 `PresentationFramework`/`PresentationCore`/`WindowsBase`
 
 ## 不应出现的模式
 

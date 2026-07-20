@@ -32,12 +32,13 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource {x:Static shell:EnvironmentColors.CommandBarHoverBrushKey}}" />
-                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource {x:Static shell:EnvironmentColors.CommandBarHoverBrushKey}}" />
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource SubtleFillSecondaryColorKey}" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource ControlStrokeSecondaryColorKey}" />
                             <Setter TargetName="PART_Image" Property="Source" Value="{Binding ImageHover, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource {x:Static shell:EnvironmentColors.CommandBarSelectedBrushKey}}" />
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource SubtleFillTertiaryColorKey}" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource ControlStrokeTertiaryColorKey}" />
                             <Setter TargetName="PART_Image" Property="Source" Value="{Binding ImagePressed, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
@@ -76,12 +77,13 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource {x:Static shell:EnvironmentColors.CommandBarHoverBrushKey}}" />
-                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource {x:Static shell:EnvironmentColors.CommandBarHoverBrushKey}}" />
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource SubtleFillSecondaryColorKey}" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource ControlStrokeSecondaryColorKey}" />
                             <Setter TargetName="PART_Image" Property="Source" Value="{Binding ImageHover, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource {x:Static shell:EnvironmentColors.CommandBarSelectedBrushKey}}" />
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource SubtleFillTertiaryColorKey}" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource ControlStrokeTertiaryColorKey}" />
                             <Setter TargetName="PART_Image" Property="Source" Value="{Binding ImagePressed, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">

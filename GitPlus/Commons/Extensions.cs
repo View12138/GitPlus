@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.Shell;
+using System.Collections;
 
 namespace GitPlus.Commons;
 
@@ -218,14 +219,19 @@ public static class Extensions
     #endregion
 
     #region Resources
-    public static Uri GetResourceUri(this string resourceName, ResourceFolders folder)
-        => new($"pack://application:,,,/GitPlus;component/{folder}/{resourceName}", UriKind.Absolute);
+    public static Uri GetResourceUri(this string resourceName, ResourceFolders folder, string assembly = "GitPlus")
+        => new($"pack://application:,,,/{assembly};component/{folder}/{resourceName}", UriKind.Absolute);
+    public static Uri GetResourceUri(this string resourceName, string folder, string assembly = "GitPlus")
+        => new($"pack://application:,,,/{assembly};component/{folder}/{resourceName}", UriKind.Absolute);
 
     extension(System.Windows.Resources.ContentTypes)
     {
         public static string ApplicationJson => "application/json";
     }
-    extension(Application)
+
+
+    private readonly static Dictionary<ResourceDictionary, Dictionary<string, object>> _cache = [];
+    extension(Application application)
     {
         public static System.Windows.Resources.StreamResourceInfo? GetResourceStream(string defaultResourceName, ResourceFolders folder, System.Globalization.CultureInfo cultureInfo)
         {
@@ -271,6 +277,46 @@ public static class Extensions
                 logger.LogTrace("[Extensions] exit '{method}'", nameof(RemoveElement));
             }
         }
+
+        public object? GetResource(string resourceKey)
+        {
+            var resources = EnumerateAllResources(application.Resources);
+            resources.TryGetValue(resourceKey, out var resourceValue);
+            return resourceValue;
+        }
+
+        /// <summary>
+        /// 递归遍历 ResourceDictionary 及其所有 MergedDictionaries，
+        /// 返回所有资源的 Key-Value 对（扁平化）
+        /// </summary>
+        private static Dictionary<string, object> EnumerateAllResources(ResourceDictionary resource)
+        {
+            if (_cache.TryGetValue(resource, out var cachedResources))
+            {
+                return cachedResources;
+            }
+            var visited = new Dictionary<string, object>();
+            foreach (DictionaryEntry item in resource)
+            {
+                if (!visited.ContainsKey(item.Key.ToString()))
+                {
+                    visited.Add(item.Key.ToString(), item.Value);
+                }
+            }
+
+            foreach (var merged in resource.MergedDictionaries)
+            {
+                foreach (var item in EnumerateAllResources(merged))
+                {
+                    if (!visited.ContainsKey(item.Key))
+                    {
+                        visited.Add(item.Key, item.Value);
+                    }
+                }
+            }
+            _cache.Add(resource, visited);
+            return visited;
+        }
     }
     #endregion
 
@@ -290,4 +336,13 @@ public enum ResourceFolders
 {
     Resources,
     Assets,
+}
+
+
+internal static class Hash
+{
+    /// <summary>
+    /// This is how VB Anonymous Types combine hash values for fields.
+    /// </summary>
+    internal static int Combine(int newKey, int currentKey) => unchecked((currentKey * (int)0xA5555529) + newKey);
 }

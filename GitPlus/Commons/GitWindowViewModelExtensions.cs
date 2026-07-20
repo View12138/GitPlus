@@ -4,16 +4,14 @@ using System.Reflection;
 
 namespace GitPlus.Commons;
 
-public static class GitWindowViewModelExtensions
+public static class ViewModelExtensions
 {
-    private const string GitWindowViewModelFullName = "Microsoft.TeamFoundation.Git.Controls.GitWindow.GitWindowViewModel";
-
-    private static (MethodInfo Method, ParameterInfo[] Parameters)? GetViewModelMethod(ILogger logger, object dataContext, string methodName, int expectedParameterCount)
+    public static (MethodInfo Method, ParameterInfo[] Parameters)? GetViewModelMethod(ILogger logger, string viewModelFullName, object dataContext, string methodName, int expectedParameterCount)
     {
         var dataContextType = dataContext.GetType();
-        if (dataContextType.FullName != GitWindowViewModelFullName)
+        if (dataContextType.FullName != viewModelFullName)
         {
-            logger.LogDebug("[GitWindowViewModelExtensions] DataContext type mismatch: expected {ExpectedType}, actual {ActualType}.", GitWindowViewModelFullName, dataContextType.FullName);
+            logger.LogDebug("[ViewModelExtensions] DataContext type mismatch: expected {ExpectedType}, actual {ActualType}.", viewModelFullName, dataContextType.FullName);
             return null;
         }
 
@@ -31,14 +29,40 @@ public static class GitWindowViewModelExtensions
             return null;
         }
 
-        logger.LogTrace("[GitWindowViewModelExtensions] resolved method '{MethodName}' on {TypeName} with {ParamCount} parameters.", methodName, dataContextType.FullName, parameterInfos.Length);
+        logger.LogTrace("[ViewModelExtensions] resolved method '{MethodName}' on {TypeName} with {ParamCount} parameters.", methodName, dataContextType.FullName, parameterInfos.Length);
         return (method, parameterInfos);
     }
+
+    public static PropertyInfo? GetViewModelProperty(ILogger logger, string viewModelFullName, object dataContext, string propertyName)
+    {
+        var dataContextType = dataContext.GetType();
+        if (dataContextType.FullName != viewModelFullName)
+        {
+            logger.LogDebug("[ViewModelExtensions] DataContext type mismatch: expected {ExpectedType}, actual {ActualType}.", viewModelFullName, dataContextType.FullName);
+            return null;
+        }
+
+        var property = dataContextType.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
+        if (property is null)
+        {
+            logger.LogWarning("Property '{PropertyName}' not found on {TypeName}.", propertyName, dataContextType.FullName);
+            return null;
+        }
+
+        logger.LogTrace("[ViewModelExtensions] resolved property '{PropertyName}' on {TypeName}.", propertyName, dataContextType.FullName);
+        return property;
+    }
+}
+
+#region GitWindowViewModel
+public static class GitWindowViewModelExtensions
+{
+    private const string GitWindowViewModelFullName = "Microsoft.TeamFoundation.Git.Controls.GitWindow.GitWindowViewModel";
 
     public static void ShowNotification(this object dataContext, string message, NotificationType type = NotificationType.Information, NotificationFlags flags = NotificationFlags.None, ICommand command = null, Guid guid = default)
     {
         var logger = Extensions.GetRequiredService<ILogger>();
-        var result = GetViewModelMethod(logger, dataContext, nameof(ShowNotification), 5);
+        var result = ViewModelExtensions.GetViewModelMethod(logger, GitWindowViewModelFullName, dataContext, nameof(ShowNotification), 5);
         if (result is null) return;
         var (method, parameterInfos) = result.Value;
 
@@ -59,7 +83,7 @@ public static class GitWindowViewModelExtensions
     public static void ShowError(this object dataContext, string errorMessage)
     {
         var logger = Extensions.GetRequiredService<ILogger>();
-        var result = GetViewModelMethod(logger, dataContext, nameof(ShowError), 1);
+        var result = ViewModelExtensions.GetViewModelMethod(logger, GitWindowViewModelFullName, dataContext, nameof(ShowError), 1);
         if (result is null) return;
         var (method, _) = result.Value;
 
@@ -77,7 +101,7 @@ public static class GitWindowViewModelExtensions
     public static void ShowException(this object dataContext, Exception ex)
     {
         var logger = Extensions.GetRequiredService<ILogger>();
-        var result = GetViewModelMethod(logger, dataContext, nameof(ShowException), 1);
+        var result = ViewModelExtensions.GetViewModelMethod(logger, GitWindowViewModelFullName, dataContext, nameof(ShowException), 1);
         if (result is null) return;
         var (method, _) = result.Value;
 
@@ -95,7 +119,7 @@ public static class GitWindowViewModelExtensions
     public static void ClearNotifications(this object dataContext)
     {
         var logger = Extensions.GetRequiredService<ILogger>();
-        var result = GetViewModelMethod(logger, dataContext, nameof(ClearNotifications), 0);
+        var result = ViewModelExtensions.GetViewModelMethod(logger, GitWindowViewModelFullName, dataContext, nameof(ClearNotifications), 0);
         if (result is null) return;
         var (method, _) = result.Value;
 
@@ -113,7 +137,7 @@ public static class GitWindowViewModelExtensions
     public static void HideNotification(this object dataContext, Guid id)
     {
         var logger = Extensions.GetRequiredService<ILogger>();
-        var result = GetViewModelMethod(logger, dataContext, nameof(HideNotification), 1);
+        var result = ViewModelExtensions.GetViewModelMethod(logger, GitWindowViewModelFullName, dataContext, nameof(HideNotification), 1);
         if (result is null) return;
         var (method, _) = result.Value;
 
@@ -150,3 +174,85 @@ public enum NotificationFlags
     NoTooltips = 2,
     All = 3
 }
+#endregion
+
+#region GitPendingChangesPageViewModel
+
+public static class GitPendingChangesPageViewModelExtensions
+{
+    private const string GitPendingChangesPageViewModelFullName = "Microsoft.TeamFoundation.Git.Controls.PendingChanges.GitPendingChangesPageViewModel";
+
+    extension(object dataContext)
+    {
+        public string CommitMessageRequiredText
+        {
+            get
+            {
+                var logger = Extensions.GetRequiredService<ILogger>();
+                var property = ViewModelExtensions.GetViewModelProperty(logger, GitPendingChangesPageViewModelFullName, dataContext, "CommitMessageRequiredText");
+                if (property is null) return string.Empty;
+
+                try
+                {
+                    return property.GetValue(dataContext) as string ?? string.Empty;
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "Failed to get CommitMessageRequiredText on {TypeName}.", dataContext.GetType().FullName);
+                    return string.Empty;
+                }
+            }
+            set
+            {
+                var logger = Extensions.GetRequiredService<ILogger>();
+                var txtBlock = GitWindowLocator.LocateChildElementAsync("ErrorLiveTextBlock", CancellationToken.None)
+                    .Result as TextBlock;
+                if (txtBlock is null) return;
+
+                try
+                {
+                    txtBlock.Text = value;
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "Failed to set CommitMessageRequiredText on {TypeName}.", dataContext.GetType().FullName);
+                }
+            }
+        }
+        public bool DisplayCommitMessageRequired
+        {
+            get
+            {
+                var logger = Extensions.GetRequiredService<ILogger>();
+                var property = ViewModelExtensions.GetViewModelProperty(logger, GitPendingChangesPageViewModelFullName, dataContext, "DisplayCommitMessageRequired");
+                if (property is null) return false;
+
+                try
+                {
+                    return (bool)property.GetValue(dataContext);
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "Failed to get CommitMessageRequiredText on {TypeName}.", dataContext.GetType().FullName);
+                    return false;
+                }
+            }
+            set
+            {
+                var logger = Extensions.GetRequiredService<ILogger>();
+                var property = ViewModelExtensions.GetViewModelProperty(logger, GitPendingChangesPageViewModelFullName, dataContext, "DisplayCommitMessageRequired");
+                if (property is null) return;
+
+                try
+                {
+                    property.SetValue(dataContext, value);
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "Failed to set CommitMessageRequiredText on {TypeName}.", dataContext.GetType().FullName);
+                }
+            }
+        }
+    }
+}
+#endregion

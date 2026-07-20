@@ -73,10 +73,10 @@
       "description": "在提交脚注中包含 BREAKING CHANGE: 或使用 <type>(scope)! 表示引入了破坏性 API 变更。破坏性变更可以是任意 <type> 提交的一部分。（MAJOR）"
     },
     {
-      "type": "GENERATE SCOPESFILE",
+      "type": "GENERATE OPTIONFILE",
       "emoji": "📝",
-      "title": "生成范围模板文件",
-      "description": "使用配置的文件模板路径生成范围模板文件"
+      "title": "生成选项模板文件",
+      "description": "使用配置的文件模板路径生成选项模板文件"
     }
   ]
 }

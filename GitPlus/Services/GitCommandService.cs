@@ -21,7 +21,7 @@ public sealed partial class GitCommandService
     public Task<GitResult> PushAsync(CancellationToken cancellationToken = default)
         => RunAsync("push", cancellationToken);
 
-    public Task<GitResult> StashPushAsync(string message = "PULL_AUTO_STASH", CancellationToken cancellationToken = default)
+    public Task<GitResult> StashPushAsync(string message = "GitPlus_PULL_AUTO_STASH", CancellationToken cancellationToken = default)
         => RunAsync($"stash push -m \"{message}\"", cancellationToken);
     public Task<GitResult> StashPopAsync(int index = 0, CancellationToken cancellationToken = default)
         => RunAsync($"stash pop -q --index \"stash@{{{index}}}\"", cancellationToken);

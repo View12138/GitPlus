@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="GitPlus.721b1cf6-a4a8-476e-92c9-357ec24ff7b7" Version="1.0.1" Language="en-US" Publisher="View" />
+    <Identity Id="GitPlus.721b1cf6-a4a8-476e-92c9-357ec24ff7b7" Version="1.0.2" Language="en-US" Publisher="View" />
     <DisplayName>Git +</DisplayName>
     <Description>Visual Studio Git Enhancement Extension — toolbar buttons, auto-fetch, smart sync and conventional commits on top of VS built-in Git tools.</Description>
     <Icon>Assets\Logo.png</Icon>

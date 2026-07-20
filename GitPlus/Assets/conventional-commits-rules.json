@@ -74,10 +74,10 @@
       "description": "Including a commit in the footnote with BREAKING CHANGE: or <type>(scope)! means a breaking API change was introduced. Breaking changes can be part of any type of commit. (MAJOR)"
     },
     {
-      "type": "GENERATE SCOPESFILE",
+      "type": "GENERATE OPTIONFILE",
       "emoji": "📝",
-      "title": "Generate Scopes File",
-      "description": "Generate a scopes template file using the configured file template path"
+      "title": "Generate Option File",
+      "description": "Generate a option template file using the configured file template path"
     }
   ]
 }

@@ -61,11 +61,146 @@ namespace GitPlus.Assets {
         }
         
         /// <summary>
-        ///   查找类似  (Auto Fetch) 的本地化字符串。
+        ///   查找类似 Invalid commit type 的本地化字符串。
         /// </summary>
-        internal static string AutoFetchToolTipSuffix {
+        internal static string Diagnostic_InvalidCommitType {
             get {
-                return ResourceManager.GetString("AutoFetchToolTipSuffix", resourceCulture);
+                return ResourceManager.GetString("Diagnostic_InvalidCommitType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Invalid footer key 的本地化字符串。
+        /// </summary>
+        internal static string Diagnostic_InvalidFooterKey {
+            get {
+                return ResourceManager.GetString("Diagnostic_InvalidFooterKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Invalid scope 的本地化字符串。
+        /// </summary>
+        internal static string Diagnostic_InvalidScope {
+            get {
+                return ResourceManager.GetString("Diagnostic_InvalidScope", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Missing &apos;)&apos; 的本地化字符串。
+        /// </summary>
+        internal static string Diagnostic_MissingCloseParen {
+            get {
+                return ResourceManager.GetString("Diagnostic_MissingCloseParen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Missing colon 的本地化字符串。
+        /// </summary>
+        internal static string Diagnostic_MissingColon {
+            get {
+                return ResourceManager.GetString("Diagnostic_MissingColon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Missing commit type 的本地化字符串。
+        /// </summary>
+        internal static string Diagnostic_MissingCommitType {
+            get {
+                return ResourceManager.GetString("Diagnostic_MissingCommitType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Missing newline 的本地化字符串。
+        /// </summary>
+        internal static string Diagnostic_MissingNewline {
+            get {
+                return ResourceManager.GetString("Diagnostic_MissingNewline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Missing &apos;(&apos; 的本地化字符串。
+        /// </summary>
+        internal static string Diagnostic_MissingOpenParen {
+            get {
+                return ResourceManager.GetString("Diagnostic_MissingOpenParen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Missing scope 的本地化字符串。
+        /// </summary>
+        internal static string Diagnostic_MissingScope {
+            get {
+                return ResourceManager.GetString("Diagnostic_MissingScope", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Missing space 的本地化字符串。
+        /// </summary>
+        internal static string Diagnostic_MissingSpace {
+            get {
+                return ResourceManager.GetString("Diagnostic_MissingSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Missing {0} value 的本地化字符串。
+        /// </summary>
+        internal static string Diagnostic_MissingTextValue {
+            get {
+                return ResourceManager.GetString("Diagnostic_MissingTextValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Unexpected extra lines 的本地化字符串。
+        /// </summary>
+        internal static string Diagnostic_UnexpectedExtraLines {
+            get {
+                return ResourceManager.GetString("Diagnostic_UnexpectedExtraLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Unexpected extra spaces 的本地化字符串。
+        /// </summary>
+        internal static string Diagnostic_UnexpectedExtraSpaces {
+            get {
+                return ResourceManager.GetString("Diagnostic_UnexpectedExtraSpaces", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Unexpected extra whitespace 的本地化字符串。
+        /// </summary>
+        internal static string Diagnostic_UnexpectedExtraWhitespace {
+            get {
+                return ResourceManager.GetString("Diagnostic_UnexpectedExtraWhitespace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 footer 的本地化字符串。
+        /// </summary>
+        internal static string DiagnosticValue_Footer {
+            get {
+                return ResourceManager.GetString("DiagnosticValue_Footer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 subject 的本地化字符串。
+        /// </summary>
+        internal static string DiagnosticValue_Subject {
+            get {
+                return ResourceManager.GetString("DiagnosticValue_Subject", resourceCulture);
             }
         }
         
@@ -151,20 +286,20 @@ namespace GitPlus.Assets {
         }
         
         /// <summary>
-        ///   查找类似 Determines the file name for conventional commit message scopes. (Use the menu item &apos;Generate Scope Template&apos; to generate the template file) 的本地化字符串。
+        ///   查找类似 Determines the file name for conventional commit message option. (Use the menu item &apos;Generate Option Template&apos; to generate the template file) 的本地化字符串。
         /// </summary>
-        internal static string Option_ConventionalCommitScopeFileName_Description {
+        internal static string Option_ConventionalCommitOptionFileName_Description {
             get {
-                return ResourceManager.GetString("Option_ConventionalCommitScopeFileName_Description", resourceCulture);
+                return ResourceManager.GetString("Option_ConventionalCommitOptionFileName_Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Conventional Commit Scope File Name 的本地化字符串。
+        ///   查找类似 Conventional Commit Option File Name 的本地化字符串。
         /// </summary>
-        internal static string Option_ConventionalCommitScopeFileName_DisplayName {
+        internal static string Option_ConventionalCommitOptionFileName_DisplayName {
             get {
-                return ResourceManager.GetString("Option_ConventionalCommitScopeFileName_DisplayName", resourceCulture);
+                return ResourceManager.GetString("Option_ConventionalCommitOptionFileName_DisplayName", resourceCulture);
             }
         }
         
@@ -340,6 +475,24 @@ namespace GitPlus.Assets {
         }
         
         /// <summary>
+        ///   查找类似 Option file already exists. Please delete it first if you want to regenerate. 的本地化字符串。
+        /// </summary>
+        internal static string OptionFileExistsMessage {
+            get {
+                return ResourceManager.GetString("OptionFileExistsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Option File Exists 的本地化字符串。
+        /// </summary>
+        internal static string OptionFileExistsTitle {
+            get {
+                return ResourceManager.GetString("OptionFileExistsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Pull failed: {0} 的本地化字符串。
         /// </summary>
         internal static string PullFailed {
@@ -376,24 +529,6 @@ namespace GitPlus.Assets {
         }
         
         /// <summary>
-        ///   查找类似 Scopes file already exists. Please delete it first if you want to regenerate. 的本地化字符串。
-        /// </summary>
-        internal static string ScopesFileExistsMessage {
-            get {
-                return ResourceManager.GetString("ScopesFileExistsMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Scopes File Exists 的本地化字符串。
-        /// </summary>
-        internal static string ScopesFileExistsTitle {
-            get {
-                return ResourceManager.GetString("ScopesFileExistsTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Stash failed: {0} 的本地化字符串。
         /// </summary>
         internal static string StashFailed {
@@ -417,6 +552,15 @@ namespace GitPlus.Assets {
         internal static string StashPopFailed {
             get {
                 return ResourceManager.GetString("StashPopFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似  (Auto Fetch) 的本地化字符串。
+        /// </summary>
+        internal static string ToolTip_AutoFetchToolTipSuffix {
+            get {
+                return ResourceManager.GetString("ToolTip_AutoFetchToolTipSuffix", resourceCulture);
             }
         }
     }

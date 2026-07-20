@@ -53,14 +53,9 @@ public sealed class GitPlusOptionPage : DialogPage
     public bool ConventionalCommitsVisible { get; set; } = true;
 
     [LocalizedCategory(nameof(Assets.Languages.OptionCategory_Commit))]
-    [LocalizedDisplayName(nameof(Assets.Languages.Option_UseConventionalCommitScope_DisplayName))]
-    [LocalizedDescription(nameof(Assets.Languages.Option_UseConventionalCommitScope_Description))]
-    public bool UseConventionalCommitScope { get; set; } = true;
-
-    [LocalizedCategory(nameof(Assets.Languages.OptionCategory_Commit))]
-    [LocalizedDisplayName(nameof(Assets.Languages.Option_ConventionalCommitScopeFileName_DisplayName))]
-    [LocalizedDescription(nameof(Assets.Languages.Option_ConventionalCommitScopeFileName_Description))]
-    public string ConventionalCommitScopeFileName { get; set; } = "ConventionalCommitScopes.json";
+    [LocalizedDisplayName(nameof(Assets.Languages.Option_ConventionalCommitOptionFileName_DisplayName))]
+    [LocalizedDescription(nameof(Assets.Languages.Option_ConventionalCommitOptionFileName_Description))]
+    public string ConventionalCommitOptionFileName { get; set; } = "ConventionalCommitOption.json";
     #endregion
 
     #region Logging
@@ -75,7 +70,7 @@ public sealed class GitPlusOptionPage : DialogPage
         new(TimeoutSeconds,GitFileName),
         new(UseAutoFetch, AutoFetchIntervalMinutes),
         new(UseRebase, AutoPullVisible),
-        new(ConventionalCommitsVisible, UseConventionalCommitScope, ConventionalCommitScopeFileName),
+        new(ConventionalCommitsVisible, ConventionalCommitOptionFileName),
         new(LogLevel));
 }
 
@@ -96,5 +91,5 @@ public sealed record GitPlusOption(
 public sealed record GitPlusGeneralOption(int TimeoutSeconds, string GitFileName);
 public sealed record GitPlusAutoFetchOption(bool UseAutoFetch, int AutoFetchIntervalMinutes);
 public sealed record GitPlusPullOption(bool UseRebase, bool AutoPullVisible);
-public sealed record GitPlusCommitOption(bool ConventionalCommitsVisible, bool UseConventionalCommitScope, string ConventionalCommitScopeFileName);
+public sealed record GitPlusCommitOption(bool ConventionalCommitsVisible, string ConventionalCommitOptionFileName);
 public sealed record GitPlusLoggingOption(LogLevel LogLevel);

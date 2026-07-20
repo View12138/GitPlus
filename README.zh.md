@@ -41,24 +41,44 @@
 - 可选的**范围**支持 — 从解决方案根目录中的可自定义范围 JSON 文件读取
 - **BREAKING CHANGE** 尾注插入
 - 类型替换 — 选择不同类型可替换消息中已有的类型
-- 通过 `GENERATE SCOPESFILE` 菜单项生成范围模板文件
+- 通过 `GENERATE OPTIONFILE` 菜单项生成选项模板文件
+
+### ✅ 约定式提交语法校验
+
+对提交消息进行实时语法校验，遵循 [Conventional Commits](https://www.conventionalcommits.org/) 规范。当通过 `ConventionalCommitOption.json` 选项文件启用**严格校验**后，扩展将：
+
+- **实时解析**提交消息，使用自研的 lexer/parser 完整理解约定式提交语法（类型、范围、描述、正文、尾注）
+- **高亮显示**语法错误和警告，直接在提交文本框中以波浪下划线标注 — 红色表示错误，黄色表示警告
+- 格式无效时以**红色边框**勾勒提交消息区域
+- **禁用**提交按钮，直至所有错误均已解决
+- **显示**诊断消息（CC001–CC014），精确描述问题所在
+
+校验器检查以下内容：
+- 缺失或无效的提交类型
+- 类型/范围后缺少冒号或空格
+- 范围括号格式错误
+- 缺少描述文本
+- 无效的尾注格式（如 `BREAKING CHANGE`、`Reviewed-by`）
+- 意外的多余空行或空格
+
+GitPlus 支持**基于仓库的提交规范配置**。`ConventionalCommitOption.json` 可直接提交到 Git 仓库，使团队成员共享统一的 Commit Message 规则。该文件可从**插入约定式提交模板**菜单生成，用于定义自定义提交类型、允许的范围以及项目专属的尾注键 — 确保整个团队保持一致的提交规范。
 
 ### ⚙️ 可配置选项
 
 所有选项可通过 **工具 → 选项 → Git +** 访问：
 
-| 类别 | 选项 | 默认值 | 描述 |
-|----------|--------|---------|-------------|
-| 常规 | 超时（秒） | 30 | Git 操作超时时间 |
-| 常规 | Git 文件路径 | *(系统 PATH)* | 自定义 `git.exe` 路径 |
-| 自动 Fetch | 启用自动 Fetch | ✅ 开 | 开启/关闭后台自动 Fetch |
-| 自动 Fetch | Fetch 间隔（分钟） | 5 | 自动 Fetch 调用间隔 |
-| 拉取 | 拉取时使用 Rebase | ✅ 开 | 使用 `--rebase` 代替合并 |
-| 拉取 | 显示自动拉取按钮 | ✅ 开 | 显示/隐藏自动拉取按钮 |
-| 提交 | 显示约定式提交按钮 | ✅ 开 | 显示/隐藏约定式提交按钮 |
-| 提交 | 使用范围 | ✅ 开 | 在提交消息中包含范围 |
-| 提交 | 约定式提交范围文件名 | ConventionalCommitScopes.json | 用于提交消息范围的文件名 |
-| 日志 | 日志级别 | 信息 | Git + 输出窗格的日志详细程度 |
+| 类别       | 选项                 | 默认值                        | 描述                         |
+|------------|----------------------|-------------------------------|------------------------------|
+| 常规       | 超时（秒）           | 30                            | Git 操作超时时间             |
+| 常规       | Git 文件路径         | *(系统 PATH)*                 | 自定义 `git.exe` 路径        |
+| 自动 Fetch | 启用自动 Fetch       | ✅ 开                          | 开启/关闭后台自动 Fetch      |
+| 自动 Fetch | Fetch 间隔（分钟）   | 5                             | 自动 Fetch 调用间隔          |
+| 拉取       | 拉取时使用 Rebase    | ✅ 开                          | 使用 `--rebase` 代替合并     |
+| 拉取       | 显示自动拉取按钮     | ✅ 开                          | 显示/隐藏自动拉取按钮        |
+| 提交       | 显示约定式提交按钮   | ✅ 开                          | 显示/隐藏约定式提交按钮      |
+| 提交       | 使用范围             | ✅ 开                          | 在提交消息中包含范围         |
+| 提交       | 约定式提交范围文件名 | ConventionalCommitScopes.json | 用于提交消息范围的文件名     |
+| 日志       | 日志级别             | 信息                          | Git + 输出窗格的日志详细程度 |
 
 ### 🌐 本地化
 
@@ -69,11 +89,10 @@
 ## 📸 截图
 
 <p align="center">
-  <img width="340px" src="https://github.com/View12138/GitPlus/raw/main/GitPlus/Assets/Screenshots1.png" alt="GitPlus Pull with Stash" style="vertical-align: top;" />
-  <img width="340px" src="https://github.com/View12138/GitPlus/raw/main/GitPlus/Assets/Screenshots2.png" alt="GitPlus 约定式提交" style="vertical-align: top;" />
+  <img width="776px" src="https://github.com/View12138/GitPlus/raw/main/GitPlus/Assets/Screenshots1.gif" alt="GitPlus" style="vertical-align: top;" />
 </p>
 
-*注入到 Git 更改窗口中的 **Pull with Stash（拉取+储藏）** 按钮和 **约定式提交** 按钮。*
+*注入到 Git 更改窗口中的 **Pull with Stash（拉取+储藏）** 按钮、**约定式提交** 按钮以及实时 **语法校验** 功能。*
 
 ---
 
@@ -86,7 +105,7 @@
 
 ### 通过 VSIX 安装
 
-从 [Releases](https://github.com/View12138/GitPlus/releases) 下载 `.vsix` 文件，双击安装。或从源码构建：
+从 [Releases](https://github.com/View12138/GitPlus/releases/latest) 下载 `.vsix` 文件，双击安装。或从源码构建：
 
 ```powershell
 dotnet build GitPlus.slnx -c Release
@@ -133,7 +152,8 @@ GitPlus/
 │   ├── GitResult.cs               # Git 操作结果模型
 │   ├── GitWindowLocator.cs        # VisualTree 元素定位器
 │   ├── GitWindowViewModelExtensions.cs
-│   └── LocalizedAttributes.cs     # 本地化特性类
+│   ├── LocalizedAttributes.cs     # 本地化特性类
+│   └── ConventionalCommitSyntaxs/ # 提交消息 lexer/parser/诊断
 ├── Assets/
 │   ├── conventional-commits-rules.json
 │   └── conventional-commits-rules.zh-Hans.json

@@ -192,7 +192,7 @@
   <data name="StashPopFailed" xml:space="preserve">
     <value>Stash pop failed: {0}</value>
   </data>
-  <data name="AutoFetchToolTipSuffix" xml:space="preserve">
+  <data name="ToolTip_AutoFetchToolTipSuffix" xml:space="preserve">
     <value> (Auto Fetch)</value>
   </data>
   <data name="OptionCategory_Commit" xml:space="preserve">
@@ -216,25 +216,73 @@
   <data name="Option_UseConventionalCommitScope_Description" xml:space="preserve">
     <value>Determines whether to use scope in commit messages.</value>
   </data>
-  <data name="Option_ConventionalCommitScopeFileName_DisplayName" xml:space="preserve">
-    <value>Conventional Commit Scope File Name</value>
+  <data name="Option_ConventionalCommitOptionFileName_DisplayName" xml:space="preserve">
+    <value>Conventional Commit Option File Name</value>
   </data>
-  <data name="Option_ConventionalCommitScopeFileName_Description" xml:space="preserve">
-    <value>Determines the file name for conventional commit message scopes. (Use the menu item 'Generate Scope Template' to generate the template file)</value>
+  <data name="Option_ConventionalCommitOptionFileName_Description" xml:space="preserve">
+    <value>Determines the file name for conventional commit message option. (Use the menu item 'Generate Option Template' to generate the template file)</value>
   </data>
   <data name="InsertConventionalCommitToolTip" xml:space="preserve">
     <value>Insert Conventional Commit Template</value>
   </data>
-  <data name="ScopesFileExistsTitle" xml:space="preserve">
-    <value>Scopes File Exists</value>
+  <data name="OptionFileExistsTitle" xml:space="preserve">
+    <value>Option File Exists</value>
   </data>
-  <data name="ScopesFileExistsMessage" xml:space="preserve">
-    <value>Scopes file already exists. Please delete it first if you want to regenerate.</value>
+  <data name="OptionFileExistsMessage" xml:space="preserve">
+    <value>Option file already exists. Please delete it first if you want to regenerate.</value>
   </data>
   <data name="FileBrowser_SelectGitTitle" xml:space="preserve">
     <value>Select git.exe</value>
   </data>
   <data name="FileBrowser_ExecutableFilter" xml:space="preserve">
     <value>Executable files (*.exe)|*.exe|All files (*.*)|*.*</value>
+  </data>
+  <data name="Diagnostic_MissingCommitType" xml:space="preserve">
+    <value>Missing commit type</value>
+  </data>
+  <data name="Diagnostic_InvalidCommitType" xml:space="preserve">
+    <value>Invalid commit type</value>
+  </data>
+  <data name="Diagnostic_MissingSpace" xml:space="preserve">
+    <value>Missing space</value>
+  </data>
+  <data name="Diagnostic_UnexpectedExtraSpaces" xml:space="preserve">
+    <value>Unexpected extra spaces</value>
+  </data>
+  <data name="Diagnostic_MissingScope" xml:space="preserve">
+    <value>Missing scope</value>
+  </data>
+  <data name="Diagnostic_InvalidScope" xml:space="preserve">
+    <value>Invalid scope</value>
+  </data>
+  <data name="Diagnostic_MissingOpenParen" xml:space="preserve">
+    <value>Missing '('</value>
+  </data>
+  <data name="Diagnostic_MissingCloseParen" xml:space="preserve">
+    <value>Missing ')'</value>
+  </data>
+  <data name="Diagnostic_MissingColon" xml:space="preserve">
+    <value>Missing colon</value>
+  </data>
+  <data name="Diagnostic_MissingTextValue" xml:space="preserve">
+    <value>Missing {0} value</value>
+  </data>
+  <data name="Diagnostic_MissingNewline" xml:space="preserve">
+    <value>Missing newline</value>
+  </data>
+  <data name="Diagnostic_UnexpectedExtraLines" xml:space="preserve">
+    <value>Unexpected extra lines</value>
+  </data>
+  <data name="Diagnostic_InvalidFooterKey" xml:space="preserve">
+    <value>Invalid footer key</value>
+  </data>
+  <data name="DiagnosticValue_Subject" xml:space="preserve">
+    <value>subject</value>
+  </data>
+  <data name="DiagnosticValue_Footer" xml:space="preserve">
+    <value>footer</value>
+  </data>
+  <data name="Diagnostic_UnexpectedExtraWhitespace" xml:space="preserve">
+    <value>Unexpected extra whitespace</value>
   </data>
 </root>
